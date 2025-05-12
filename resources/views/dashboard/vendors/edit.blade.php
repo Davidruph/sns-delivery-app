@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Staff Edit Page')
+@section('title', 'Vendor Edit Page')
 
 @section('content')
     @include('alerts.index')
@@ -10,12 +10,12 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h4 class="card-title">Edit {{ $user->username }}</h4>
-                    <a href="{{ route('users.index') }}" class="btn btn-secondary">Back to Staffs</a>
+                    <a href="{{ route('vendors.index') }}" class="btn btn-secondary">Back to Vendor list</a>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('users.update', $user->id) }}" method="POST">
+                    <form action="{{ route('vendors.update', $user->id) }}" method="POST">
                         @csrf
-                        <div class="row">
+                        <div class="row mb-3">
                             <div class="col">
                                 <label for="name"><strong>Name</strong></label>
                                 <input type="text" name="name" id="name" class="form-control"
@@ -25,19 +25,6 @@
                                 <label for="username"><strong>Username</strong></label>
                                 <input type="text" name="username" id="username" class="form-control"
                                     value="{{ old('username', $user->username) }}" required>
-                            </div>
-                            <div class="col">
-                                <label for="role"><strong>Role</strong></label>
-                                <select class="default-select form-control wide mb-3" name="role" id="role"
-                                    required>
-                                    <option value="">Select Role</option>
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->name }}"
-                                            {{ $user->roles->contains('name', $role->name) ? 'selected' : '' }}>
-                                            {{ $role->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
                             </div>
                         </div>
 

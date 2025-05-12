@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,12 +16,12 @@ class OrderController extends Controller
 
     public function create()
     {
-        return view('dashboard.order.create');
+        $user = User::where('id', Auth::user()->id)->first();
+        return view('dashboard.order.create', compact('user'));
     }
 
     public function store(Request $request)
     {
-        // Validate and store the new order
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
@@ -35,6 +36,6 @@ class OrderController extends Controller
             'status' => 'pending',
         ]);
 
-        return redirect()->route('orders.index')->with('success', 'Order created successfully.');
+        return redirect()->route('order.index')->with('success', 'Order created successfully.');
     }
 }

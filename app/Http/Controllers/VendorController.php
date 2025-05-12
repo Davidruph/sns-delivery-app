@@ -2,31 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class VendorController extends Controller
 {
     public function index()
     {
-        $users = User::where('group_id', Auth::user()->group_id)
-            ->whereDoesntHave('roles', function ($query) {
+        $vendors = User::where('group_id', Auth::user()->group_id)
+            ->whereHas('roles', function ($query) {
                 $query->where('name', 'Vendor');
             })
             ->with('roles')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('dashboard.users.index', compact('users'));
+        return view('dashboard.vendors.index', compact('vendors'));
     }
+
 
     public function create()
     {
-        $roles = Role::all();
-        return view('dashboard.users.create', compact('roles'));
+        return view('dashboard.vendors.create');
     }
 
     public function store(Request $request)
@@ -35,7 +35,6 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
-            'role' => 'required|exists:roles,name',
             'username' => 'required|string|max:255|unique:users,username,',
             'phone' => 'required|string|max:255',
             'address' => 'required|string|max:255'
@@ -52,20 +51,18 @@ class UserController extends Controller
             'plan' => 'free',
         ]);
 
-        $user->assignRole($request->role);
+        $user->assignRole('Vendor');
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        return redirect()->route('vendors.index')->with('success', 'Vendor created successfully.');
     }
 
     public function edit(User $user)
     {
         if ($user->group_id !== Auth::user()->group_id) {
-            return redirect()->route('users.index')->with('error', 'Unauthorized access.');
+            return redirect()->route('vendors.index')->with('error', 'Unauthorized access.');
         }
         $user->load('roles');
-        $roles = Role::all();
-
-        return view('dashboard.users.edit', compact('user', 'roles'));
+        return view('dashboard.vendors.edit', compact('user'));
     }
 
     public function update(Request $request, User $user)
@@ -73,11 +70,14 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'role' => 'required|exists:roles,name',
             'username' => 'required|string|max:255|unique:users,username,' . $user->id,
             'phone' => 'required|string|max:255',
             'address' => 'required|string|max:255'
         ]);
+
+        if ($user->group_id !== Auth::user()->group_id) {
+            return redirect()->route('vendors.index')->with('error', 'Unauthorized access.');
+        }
 
         $user->update([
             'name' => $request->name,
@@ -87,9 +87,7 @@ class UserController extends Controller
             'address' => $request->address,
         ]);
 
-        $user->syncRoles($request->role);
-
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        return redirect()->route('vendors.index')->with('success', 'Vendor updated successfully.');
     }
 
     public function destroy(User $user)
@@ -99,6 +97,6 @@ class UserController extends Controller
         }
 
         $user->delete();
-        return redirect()->route('vendors.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('vendors.index')->with('success', 'Vendor deleted successfully.');
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Create staff Page')
+@section('title', 'Create vendor Page')
 
 @section('content')
     @include('alerts.index')
@@ -9,33 +9,21 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Create a new user</h4>
+                    <h4 class="card-title">Create a new vendor</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('users.store') }}" method="POST">
+                    <form action="{{ route('vendors.store') }}" method="POST">
                         @csrf
                         <div class="row mb-3">
-                            <div class="col">
-                                <label for="name"><strong>Name</strong></label>
-                                <input type="text" name="name" id="name" class="form-control"
-                                    value="{{ old('name') }}" required>
-                            </div>
                             <div class="col">
                                 <label for="username"><strong>Username</strong></label>
                                 <input type="text" name="username" id="username" class="form-control"
                                     value="{{ old('username') }}" required>
                             </div>
                             <div class="col">
-                                <label for="role"><strong>Role</strong></label>
-                                <select class="default-select form-control wide" name="role" id="role" required>
-                                    <option value="">Select Role</option>
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->name }}"
-                                            {{ old('role') === $role->name ? 'selected' : '' }}>
-                                            {{ $role->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <label for="name"><strong>Name</strong></label>
+                                <input type="text" name="name" id="name" class="form-control"
+                                    value="{{ old('name') }}" required>
                             </div>
                         </div>
 
