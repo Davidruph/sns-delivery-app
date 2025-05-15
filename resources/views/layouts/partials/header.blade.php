@@ -724,82 +724,37 @@
                                     <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3"
                                         style="height:380px;">
                                         <ul class="timeline">
-                                            <li>
-                                                <div class="timeline-panel">
-                                                    <div class="media me-2">
-                                                        <img alt="image" width="50" src="images/avatar/1.jpg">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6 class="mb-1"><a href="javascript:voiud(0)"> Dr sultads
-                                                                Send you Photo</a></h6>
-                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="timeline-panel">
-                                                    <div class="media me-2 media-info">
-                                                        KG
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6 class="mb-1"><a href="javascript:voiud(0)">Resport
-                                                                created successfully</a></h6>
-                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="timeline-panel">
-                                                    <div class="media me-2 media-success">
-                                                        <i class="fa fa-home"></i>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6 class="mb-1"><a href="javascript:voiud(0)">Reminder :
-                                                                Treatment Time!</a></h6>
-                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="timeline-panel">
-                                                    <div class="media me-2">
-                                                        <img alt="image" width="50" src="images/avatar/1.jpg">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6 class="mb-1"><a href="javascript:voiud(0)">Dr sultads
-                                                                Send you Photo</a></h6>
-                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="timeline-panel">
-                                                    <div class="media me-2 media-danger">
-                                                        KG
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6 class="mb-1"><a href="javascript:voiud(0)"> Resport
-                                                                created successfully </a></h6>
-                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="timeline-panel">
-                                                    <div class="media me-2 media-primary">
-                                                        <i class="fa fa-home"></i>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6 class="mb-1"><a href="javascript:voiud(0)"> Reminder :
-                                                                Treatment Time! </a></h6>
-                                                        <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                    </div>
-                                                </div>
-                                            </li>
+                                            @forelse(auth()->user()->notifications as $notification)
+                                                <li>
+                                                    <a href="{{ $notification->data['link'] }}"
+                                                        style="text-decoration: none; color: inherit; cursor: pointer;">
+                                                        <div class="timeline-panel">
+                                                            <div class="media me-2 media-primary">
+                                                                <i class="fa fa-shopping-cart"></i>
+                                                                {{-- Order Icon --}}
+                                                            </div>
+                                                            <div class="media-body">
+                                                                <h6 class="mb-0">{{ $notification->data['title'] }}
+                                                                </h6>
+                                                                <small
+                                                                    class="d-block">{{ $notification->data['message'] }}</small>
+                                                                <small
+                                                                    class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            @empty
+                                                <li>
+                                                    <div class="text-center text-muted">No notifications</div>
+                                                </li>
+                                            @endforelse
                                         </ul>
                                     </div>
-                                    <a class="all-notification" href="javascript:void(0);">See all notifications <i
-                                            class="ti-arrow-end"></i></a>
+
+
+                                    {{-- <a class="all-notification" href="javascript:void(0);">See all notifications <i
+                                            class="ti-arrow-end"></i></a> --}}
                                 </div>
                             </li>
                             <li class="nav-item dropdown notification_dropdown">

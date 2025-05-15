@@ -9,11 +9,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\StoreSettingsController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::middleware('guest')->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
     Route::get('register', [AuthController::class, 'create'])->name('register');
     Route::post('register', [AuthController::class, 'store'])->name('register.post');
     Route::get('login', [AuthController::class, 'login'])->name('login');
@@ -49,9 +48,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
     Route::post('/profile/change-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 
-    Route::get('/order', [OrderController::class, 'index'])->name('order.index');
-    Route::get('/order/create', [OrderController::class, 'create'])->name('order.create');
-    Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+    Route::middleware(['role:Super Admin|Portal Manager|Customer Service'])->group(function () {
+        Route::get('/orders/view/all', [OrderController::class, 'view_all_orders'])->name('order.view.all');
+        Route::post('/order/{order}/status', [OrderController::class, 'change_order_status'])->name('order.status');
+        Route::get('/order/{order}/view', [OrderController::class, 'view'])->name('order.view');
+    });
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
     Route::middleware(['role:Vendor'])->group(function () {
@@ -60,6 +61,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/inventory/{inventory}/edit', [InventoryController::class, 'edit'])->name('inventory.edit');
         Route::post('/inventory/update/{inventory}', [InventoryController::class, 'update'])->name('inventory.update');
         Route::post('/inventory/{inventory}', [InventoryController::class, 'destroy'])->name('inventory.destroy');
+
+        Route::get('/order', [OrderController::class, 'index'])->name('order.index');
+        Route::get('/order/create', [OrderController::class, 'create'])->name('order.create');
+        Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+        Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('order.edit');
+        Route::post('/order/update/{order}', [OrderController::class, 'update'])->name('order.update');
+        Route::post('/order/{order}', [OrderController::class, 'destroy'])->name('order.destroy');
     });
 
     Route::get('logout', [AuthController::class, 'destroy'])->name('logout');

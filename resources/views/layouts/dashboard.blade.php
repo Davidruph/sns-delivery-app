@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title', 'Delivery App')</title>
+    @auth
+        <meta name="user-id" content="{{ auth()->id() }}">
+    @endauth
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="keywords" content="">
     <meta name="author" content="">
@@ -118,7 +122,43 @@
     <script src="{{ asset('js/custom.min.js') }}"></script>
     <script src="{{ asset('js/dlabnav-init.js') }}"></script>
     <script src="js/demo.js"></script>
-    {{-- <script src="{{ asset('js/styleSwitcher.js') }}"></script> --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const productContainer = document.getElementById('product-container');
+
+            productContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('add-row')) {
+                    const currentRow = e.target.closest('.product-row');
+                    const newRow = currentRow.cloneNode(true);
+
+                    // Clear values in cloned inputs
+                    newRow.querySelectorAll('input, select').forEach(input => input.value = '');
+
+                    // Change "Add" button to "Remove"
+                    const addButton = newRow.querySelector('.add-row');
+                    addButton.textContent = 'Remove';
+                    addButton.classList.remove('btn-success');
+                    addButton.classList.add('btn-danger');
+                    addButton.classList.remove('add-row');
+                    addButton.classList.add('remove-row');
+
+                    productContainer.appendChild(newRow);
+                }
+
+                if (e.target.classList.contains('remove-row')) {
+                    e.target.closest('.product-row').remove();
+                }
+            });
+        });
+    </script>
+
+    <!-- Set userId first -->
+    <script>
+        window.userId = @json(auth()->id() ?? null);
+    </script>
+
+    <!-- Load app.js (Vite compiled assets) -->
+    @vite('resources/js/echo.js')
 </body>
 
 </html>

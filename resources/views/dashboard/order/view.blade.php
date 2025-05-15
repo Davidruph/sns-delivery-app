@@ -19,10 +19,10 @@
                         <thead>
                             <tr>
                                 <th style="width:80px;"><strong>#</strong></th>
-                                {{-- <th><strong>NAME</strong></th>
+                                <th><strong>NAME</strong></th>
                                 <th><strong>EMAIL</strong></th>
                                 <th><strong>ADDRESS</strong></th>
-                                <th><strong>PHONE</strong></th> --}}
+                                <th><strong>PHONE</strong></th>
                                 <th><strong>PRODUCT</strong></th>
                                 <th><strong>QTY</strong></th>
                                 <th><strong>AMOUNT</strong></th>
@@ -36,10 +36,10 @@
                             @foreach ($orders as $order)
                                 <tr>
                                     <td><strong>{{ $loop->iteration }}</strong></td>
-                                    {{-- <td>{{ $order->name }}</td>
+                                    <td>{{ $order->name }}</td>
                                     <td>{{ $order->email }}</td>
                                     <td>{{ $order->address }}</td>
-                                    <td>{{ $order->phone }}</td> --}}
+                                    <td>{{ $order->phone }}</td>
 
                                     {{-- Product column --}}
                                     <td>
@@ -84,14 +84,11 @@
                                                 </svg>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item"
-                                                    href="{{ route('order.edit', $order->id) }}">Edit</a>
-                                                <form action="{{ route('order.destroy', $order->id) }}" method="POST">
-                                                    @csrf
-                                                    <button type="submit"
-                                                        onclick="return confirm('Are you sure you want to delete this order?')"
-                                                        class="dropdown-item">Delete</button>
-                                                </form>
+                                                <a href="#" type="button" class="dropdown-item"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#statusModal{{ $order->id }}">
+                                                    Change status
+                                                </a>
                                             </div>
                                         </div>
                                     </td>
@@ -107,4 +104,45 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="statusModal{{ $order->id }}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <form action="{{ route('order.status', $order->id) }}" method="POST">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Change Order Status</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                        <div class="form-group">
+                            <label for="order_status">Order Status</label>
+                            <select name="order_status" id="order_status" class="mb-3 form-control wide" required
+                                style="background: #311898">
+                                <option value="">--Select status--</option>
+                                @foreach ($statuses as $status)
+                                    <option value="{{ $status }}"
+                                        {{ $order->status === $status ? 'selected' : '' }}>
+                                        {{ $status }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="remark">Remark</label>
+                            <textarea name="remark" id="remark" class="form-control" rows="3" placeholder="Optional remark"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" onclick="return confirm('Are you sure you want to update the order status?')"
+                            class="btn btn-primary">Update Status</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 @endsection

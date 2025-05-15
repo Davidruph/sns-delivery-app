@@ -32,6 +32,33 @@
                             </div>
                         </div>
 
+                        <div id="product-container">
+                            <div class="row mb-2 product-row">
+                                <div class="col">
+                                    <label><strong>Select Product</strong></label>
+                                    <select name="product[]" class="default-select form-control wide" required>
+                                        <option value="">-- Select Product --</option>
+                                        @foreach ($products as $product)
+                                            <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <label><strong>Quantity</strong></label>
+                                    <input type="number" name="quantity[]" class="form-control" required>
+                                </div>
+                                <div class="col-3">
+                                    <label><strong>Amount/Price</strong></label>
+                                    <input type="number" name="amount[]" class="form-control" required>
+                                </div>
+                                <div class="col-2">
+                                    <label><strong>&nbsp;</strong></label>
+                                    <button type="button" class="btn btn-success add-row w-100">Add</button>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="row mb-3">
                             <div class="coL">
                                 <label for="address"><strong>Address</strong></label>

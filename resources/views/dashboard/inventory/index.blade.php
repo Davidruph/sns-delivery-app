@@ -20,7 +20,7 @@
                             <tr>
                                 <th style="width:80px;"><strong>#</strong></th>
                                 <th><strong>NAME</strong></th>
-                                <th>Image</th>
+                                <th><strong>IMAGE</strong></th>
                                 <th><strong>QUANTITY</strong></th>
                                 <th><strong>COST PRICE</strong></th>
                                 <th><strong>SELLING PRICE</strong></th>

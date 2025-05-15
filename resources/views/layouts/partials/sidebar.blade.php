@@ -131,8 +131,13 @@
                      <span class="nav-text">Order</span>
                  </a>
                  <ul aria-expanded="false">
-                     <li><a href="{{ route('order.index') }}">Order List</a></li>
-                     <li><a href="{{ route('order.create') }}">Create Order</a></li>
+                     @if (auth()->user()->getRoleNames()->first() === 'Super Admin')
+                         <li><a href="{{ route('order.view.all') }}">All Orders</a></li>
+                     @endif
+                     @if (auth()->user()->getRoleNames()->first() === 'Vendor')
+                         <li><a href="{{ route('order.index') }}">My Orders</a></li>
+                         <li><a href="{{ route('order.create') }}">Create Order</a></li>
+                     @endif
                  </ul>
              </li>
 
