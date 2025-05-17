@@ -199,6 +199,21 @@
                                 console.warn('Notification sound play failed:', e);
                             });
                         }
+
+                        if (Notification.permission !== 'granted') {
+                            Notification.requestPermission();
+                        }
+
+                        if (Notification.permission === 'granted') {
+                            const browserNotification = new Notification(notification.title, {
+                                body: notification.message,
+                                icon: '/images/favicon.png' // Or any icon path
+                            });
+
+                            browserNotification.onclick = function() {
+                                window.open(notification.link, '_blank');
+                            };
+                        }
                     });
             }
         });
