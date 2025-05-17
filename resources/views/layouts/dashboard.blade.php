@@ -7,6 +7,13 @@
     @auth
         <meta name="user-id" content="{{ auth()->id() }}">
     @endauth
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Set userId first -->
+    <script>
+        window.userId = {{ auth()->id() }};
+    </script>
+
+    @vite(['resources/js/app.js'])
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="keywords" content="">
@@ -107,6 +114,7 @@
     <!--**********************************
         Main wrapper end
     ***********************************-->
+    <audio id="notification-sound" src="{{ asset('/sound.mp3') }}" preload="auto"></audio>
 
     <script src="{{ asset('vendor/global/global.min.js') }}"></script>
     <script src="{{ asset('vendor/chart.js/Chart.bundle.min.js') }}"></script>
@@ -152,13 +160,49 @@
         });
     </script>
 
-    <!-- Set userId first -->
     <script>
-        window.userId = @json(auth()->id() ?? null);
-    </script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.userId) {
+                Echo.private(`App.Models.User.${window.userId}`)
+                    .listen('.order_message', (notification) => {
+                        console.log('New order notification:', notification);
 
-    <!-- Load app.js (Vite compiled assets) -->
-    @vite('resources/js/echo.js')
+                        const ul = document.querySelector('.timeline');
+                        if (!ul) {
+                            console.warn('Timeline element not found');
+                            return;
+                        }
+
+                        const li = document.createElement('li');
+
+                        li.innerHTML = `
+                    <a href="${notification.link}" style="text-decoration: none; color: inherit; cursor: pointer;">
+                        <div class="timeline-panel">
+                            <div class="media me-2 media-primary">
+                                <i class="fa fa-shopping-cart"></i>
+                            </div>
+                            <div class="media-body">
+                                <h6 class="mb-0">${notification.title}</h6>
+                                <small class="d-block">${notification.message}</small>
+                                <small class="text-muted">${notification.time}</small>
+                            </div>
+                        </div>
+                    </a>
+                `;
+                        ul.prepend(li);
+
+                        // Play notification sound
+                        const sound = document.getElementById('notification-sound');
+                        if (sound) {
+                            sound.play().catch(e => {
+                                // Handle play error, often due to user interaction required in browsers
+                                console.warn('Notification sound play failed:', e);
+                            });
+                        }
+                    });
+            }
+        });
+    </script>
 </body>
 
 </html>

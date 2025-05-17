@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\StoreSetting;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -55,5 +56,10 @@ class User extends Authenticatable
     public function groupUsers()
     {
         return $this->hasMany(User::class, 'group_id', 'group_id');
+    }
+
+    public function storeSetting()
+    {
+        return $this->hasOne(StoreSetting::class, 'group_id', 'group_id');
     }
 }

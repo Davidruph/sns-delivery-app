@@ -19,6 +19,18 @@ class InventoryController extends Controller
         return view('dashboard.inventory.index', compact('inventory'));
     }
 
+    public function view_all_inventory()
+    {
+        $userIds = Auth::user()->groupUsers->pluck('id');
+
+        $inventory = Inventory::whereIn('user_id', $userIds)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        // Return the view with the inventory data
+        return view('dashboard.inventory.view_all_inventory', compact('inventory'));
+    }
+
     public function create()
     {
         // Return the view to create a new inventory item

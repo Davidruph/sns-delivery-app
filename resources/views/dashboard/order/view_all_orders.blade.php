@@ -93,6 +93,50 @@
                                         </div>
                                     </td>
                                 </tr>
+
+                                <div class="modal fade" id="statusModal{{ $order->id }}" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                        <form action="{{ route('order.status', $order->id) }}" method="POST">
+                                            @csrf
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Change Order Status</h5>
+                                                    <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                                                    <div class="form-group">
+                                                        <label for="order_status">Order Status</label>
+                                                        <select name="order_status" id="order_status"
+                                                            class="mb-3 form-control wide" required
+                                                            style="background: #311898">
+                                                            <option value="">--Select status--</option>
+                                                            @foreach ($statuses as $status)
+                                                                <option value="{{ $status }}"
+                                                                    {{ $order->status === $status ? 'selected' : '' }}>
+                                                                    {{ $status }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="remark">Remark</label>
+                                                        <textarea name="remark" id="remark" class="form-control" rows="3" placeholder="Optional remark">{{ $order->remark }}</textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="submit"
+                                                        onclick="return confirm('Are you sure you want to update the order status?')"
+                                                        class="btn btn-primary">Update Status</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             @endforeach
                         </tbody>
 
@@ -102,46 +146,6 @@
                     {{ $orders->links() }}
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="statusModal{{ $order->id }}" tabindex="-1">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <form action="{{ route('order.status', $order->id) }}" method="POST">
-                @csrf
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Change Order Status</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-                        <div class="form-group">
-                            <label for="order_status">Order Status</label>
-                            <select name="order_status" id="order_status" class="mb-3 form-control wide" required
-                                style="background: #311898">
-                                <option value="">--Select status--</option>
-                                @foreach ($statuses as $status)
-                                    <option value="{{ $status }}"
-                                        {{ $order->status === $status ? 'selected' : '' }}>
-                                        {{ $status }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="remark">Remark</label>
-                            <textarea name="remark" id="remark" class="form-control" rows="3" placeholder="Optional remark"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="submit" onclick="return confirm('Are you sure you want to update the order status?')"
-                            class="btn btn-primary">Update Status</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
 

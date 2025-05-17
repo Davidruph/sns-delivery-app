@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Pusher\Pusher;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -85,5 +86,23 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function socket_authenticate(Request $request)
+    {
+        $pusher = new Pusher(
+            config('broadcasting.connections.pusher.key'),
+            config('broadcasting.connections.pusher.secret'),
+            config('broadcasting.connections.pusher.app_id'),
+            [
+                'cluster' => config('broadcasting.connections.pusher.options.cluster'),
+                'useTLS' => true
+            ]
+        );
+
+
+        $auth = $pusher->authorizeChannel($request->channel_name, $request->socket_id);
+
+        return response($auth);
     }
 }

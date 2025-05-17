@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Inventory;
 use App\Models\OrderItem;
-use App\Notifications\NewOrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\NewOrderNotification;
+use Illuminate\Support\Facades\Notification;
 
 class OrderController extends Controller
 {
@@ -76,19 +78,13 @@ class OrderController extends Controller
             $rolesToNotify = ['Super Admin', 'Portal Manager', 'Customer Service'];
             $superAdmins = User::role($rolesToNotify)
                 ->where('group_id', Auth::user()->group_id)
+                ->where('id', '!=', Auth::id())
                 ->get();
 
-            $superAdmins = User::role('Super Admin')
-                ->where('group_id', Auth::user()->group_id)
-                ->get();
-
-            // Notify them
-            foreach ($superAdmins as $admin) {
-                $admin->notify(new NewOrderNotification(
-                    $order,
-                    'New Order Received'
-                ));
-            }
+            Notification::sendNow($superAdmins, new NewOrderNotification($order));
+            Log::info('Notified users about order #' . $order->id, [
+                'users' => $superAdmins->pluck('id')->toArray()
+            ]);
         });
 
         return redirect()->route('order.index')->with('success', 'Order created successfully.');
@@ -96,8 +92,9 @@ class OrderController extends Controller
 
     public function view(Order $order)
     {
+        $statuses = $this->getAvailableStatusesForRole();
         $order->load('items.inventory');
-        return view('dashboard.order.view', compact('order'));
+        return view('dashboard.order.view', compact('order', 'statuses'));
     }
 
     public function edit(Order $order)
@@ -164,13 +161,13 @@ class OrderController extends Controller
 
         switch ($role) {
             case 'Super Admin':
-                return ['Pending', 'Paid', 'Delivery Arranged', 'Delivered', 'Wrong number', 'Not available'];
+                return ['Pending', 'Paid', 'Delivery Arranged', 'Delivered', 'Wrong number', 'Not available', 'Number not reachable'];
 
             case 'Portal Manager':
-                return ['Pending', 'Paid', 'Delivery Arranged', 'Delivered', 'Wrong number', 'Not available'];
+                return ['Pending', 'Paid', 'Delivery Arranged', 'Delivered', 'Wrong number', 'Not available', 'Number not reachable'];
 
             case 'Customer Service':
-                return ['Pending', 'Paid', 'Delivery Arranged', 'Wrong number', 'Not available'];
+                return ['Pending', 'Paid', 'Delivery Arranged', 'Wrong number', 'Not available', 'Number not reachable'];
 
             default:
                 return ['Pending'];
@@ -191,8 +188,19 @@ class OrderController extends Controller
             'remark' => $request->remark,
         ]);
 
+        // Get the user who owns the order as a collection
+        $userToNotify = User::where('id', $order->user_id)->get();
+
+        Notification::sendNow($userToNotify, new NewOrderNotification(
+            $order,
+            'Order Status Updated',
+            "Your order #{$order->id} status has been updated to: {$order->status}",
+            route('order.view', $order->id)
+        ));
+
         return back()->with('success', 'Order status updated.');
     }
+
 
 
     public function destroy(Order $order)

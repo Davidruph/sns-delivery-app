@@ -9,7 +9,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class NewOrderNotification extends Notification implements ShouldBroadcastNow
+class OrderUpdateNotification extends Notification implements ShouldBroadcastNow
 {
     use Queueable;
 
@@ -47,10 +47,9 @@ class NewOrderNotification extends Notification implements ShouldBroadcastNow
         return new BroadcastMessage($this->broadcastWith());
     }
 
-
-    public function broadcastOnChannels($notifiable)
+    public function broadcastOn()
     {
-        return new PrivateChannel('App.Models.User.' . $notifiable->id);
+        return new PrivateChannel('App.Models.User.' . $this->order->user_id);
     }
 
     public function broadcastAs()

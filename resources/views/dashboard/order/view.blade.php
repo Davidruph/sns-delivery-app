@@ -29,48 +29,51 @@
                                 <th><strong>DATE</strong></th>
                                 <th><strong>STATUS</strong></th>
                                 <th><strong>REMARK</strong></th>
-                                <th></th>
+                                @if (auth()->user()->getRoleNames()->first() !== 'Vendor')
+                                    <th></th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($orders as $order)
-                                <tr>
-                                    <td><strong>{{ $loop->iteration }}</strong></td>
-                                    <td>{{ $order->name }}</td>
-                                    <td>{{ $order->email }}</td>
-                                    <td>{{ $order->address }}</td>
-                                    <td>{{ $order->phone }}</td>
+                            <tr>
+                                <td><strong>1</strong></td>
+                                <td>{{ $order->name }}</td>
+                                <td>{{ $order->email }}</td>
+                                <td>{{ $order->address }}</td>
+                                <td>{{ $order->phone }}</td>
 
-                                    {{-- Product column --}}
-                                    <td>
-                                        <ul class="list-unstyled mb-0">
-                                            @foreach ($order->items as $item)
-                                                <li>{{ $loop->iteration }}. {{ $item->inventory->name ?? 'N/A' }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </td>
+                                {{-- Product column --}}
+                                <td>
+                                    <ul class="list-unstyled mb-0">
+                                        @foreach ($order->items as $item)
+                                            <li>{{ $loop->iteration }}. {{ $item->inventory->name ?? 'N/A' }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
 
-                                    {{-- Quantity column --}}
-                                    <td>
-                                        <ul class="list-unstyled mb-0">
-                                            @foreach ($order->items as $item)
-                                                <li>{{ $item->quantity }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </td>
+                                {{-- Quantity column --}}
+                                <td>
+                                    <ul class="list-unstyled mb-0">
+                                        @foreach ($order->items as $item)
+                                            <li>{{ $item->quantity }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
 
-                                    {{-- Amount column --}}
-                                    <td>
-                                        <ul class="list-unstyled mb-0">
-                                            @foreach ($order->items as $item)
-                                                <li>₦{{ number_format($item->amount, 2) }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </td>
+                                {{-- Amount column --}}
+                                <td>
+                                    <ul class="list-unstyled mb-0">
+                                        @foreach ($order->items as $item)
+                                            <li>₦{{ number_format($item->amount, 2) }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
 
-                                    <td>{{ $order->created_at->format('d-m-Y') }}</td>
-                                    <td>{{ $order->status }}</td>
-                                    <td>{{ $order->remark }}</td>
+                                <td>{{ $order->created_at->format('d-m-Y') }}</td>
+                                <td>{{ $order->status }}</td>
+                                <td>{{ $order->remark }}</td>
+                                @if (auth()->user()->getRoleNames()->first() !== 'Vendor')
+                                    <th>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn btn-success light sharp"
@@ -92,14 +95,13 @@
                                             </div>
                                         </div>
                                     </td>
-                                </tr>
-                            @endforeach
+                                    </th>
+                                @endif
+                            </tr>
+
                         </tbody>
 
                     </table>
-
-
-                    {{ $orders->links() }}
                 </div>
             </div>
         </div>
@@ -131,7 +133,7 @@
 
                         <div class="form-group">
                             <label for="remark">Remark</label>
-                            <textarea name="remark" id="remark" class="form-control" rows="3" placeholder="Optional remark"></textarea>
+                            <textarea name="remark" id="remark" class="form-control" rows="3" placeholder="Optional remark">{{ $order->remark }}</textarea>
                         </div>
                     </div>
 

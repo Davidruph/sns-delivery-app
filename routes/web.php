@@ -20,6 +20,8 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::post('broadcasting/auth', [AuthController::class, 'socket_authenticate'])->name('socket_auth');
+
     Route::get('/dashboard', function () {
         return view('dashboard.index');
     })->name('dashboard');
@@ -48,13 +50,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
     Route::post('/profile/change-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 
-    Route::middleware(['role:Super Admin|Portal Manager|Customer Service'])->group(function () {
+    Route::middleware(['role:Super Admin|Portal Manager|Customer Service|Vendor'])->group(function () {
         Route::get('/orders/view/all', [OrderController::class, 'view_all_orders'])->name('order.view.all');
         Route::post('/order/{order}/status', [OrderController::class, 'change_order_status'])->name('order.status');
         Route::get('/order/{order}/view', [OrderController::class, 'view'])->name('order.view');
+        Route::get('/inventory/all', [InventoryController::class, 'view_all_inventory'])->name('inventory.view.all');
     });
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
+
     Route::middleware(['role:Vendor'])->group(function () {
         Route::get('/inventory/create', [InventoryController::class, 'create'])->name('inventory.create');
         Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');

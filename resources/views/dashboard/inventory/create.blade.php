@@ -80,13 +80,12 @@
 
                         <div class="mb-3">
                             <label for="description"><strong>Description (optional)</strong></label>
-                            <textarea rows="3" name="description" id="description" class="form-control" required>{{ old('description') }}</textarea>
+                            <textarea rows="3" name="description" id="description" class="form-control">{{ old('description') }}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label for="image"><strong>Product Image (optional)</strong></label>
-                            <input type="file" name="image" id="image" class="form-control" accept="image/*"
-                                required>
+                            <input type="file" name="image" id="image" class="form-control" accept="image/*">
                         </div>
 
                         <div class="text-center mt-4">

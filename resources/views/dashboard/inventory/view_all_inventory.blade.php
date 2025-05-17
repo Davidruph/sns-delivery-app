@@ -9,10 +9,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header justify-content-between align-items-center">
-                    <h4 class="card-title">List of my inventories</h4>
-                    @if (auth()->user()->getRoleNames()->first() === 'Vendor')
-                        <a href="{{ route('inventory.create') }}" class="btn btn-secondary">Create Inventory</a>
-                    @endif
+                    <h4 class="card-title">List of all inventories</h4>
                 </div>
                 <div class="card-body">
                     <table class="table table-hover table-responsive-sm">
@@ -22,8 +19,8 @@
                                 <th><strong>NAME</strong></th>
                                 <th><strong>IMAGE</strong></th>
                                 <th><strong>QUANTITY</strong></th>
-                                <th><strong>COST PRICE</strong></th>
-                                <th><strong>SELLING PRICE</strong></th>
+                                {{-- <th><strong>COST PRICE</strong></th>
+                                <th><strong>SELLING PRICE</strong></th> --}}
                                 <th><strong>DESCRIPTION</strong></th>
                                 <th><strong>DATE CREATED</strong></th>
                                 <th></th>
@@ -48,11 +45,11 @@
                                     </td>
 
                                     <td>{{ $item->quantity }}</td>
-                                    <td>{{ $item->cost_price }}</td>
-                                    <td>{{ $item->selling_price }}</td>
+                                    {{-- <td>{{ number_format($item->cost_price, 2) }}</td>
+                                    <td>{{ number_format($item->selling_price, 2) }}</td> --}}
                                     <td>{{ $item->description }}</td>
                                     <td>{{ $item->created_at->format('d-m-Y') }}</td>
-                                    <td>
+                                    {{-- <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn btn-success light sharp"
                                                 data-bs-toggle="dropdown">
@@ -77,7 +74,7 @@
                                                 </form>
                                             </div>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>

@@ -22,43 +22,49 @@
                  </a>
              </li>
 
-             @if (auth()->user()->getRoleNames()->first() === 'Vendor')
-                 <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-                         <div class="menu-icon">
-                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                 <path
-                                     d="M19 6H5C4.44772 6 4 6.44772 4 7V9C4 9.55228 4.44772 10 5 10H19C19.5523 10 20 9.55228 20 9V7C20 6.44772 19.5523 6 19 6Z"
-                                     fill="#763ed0" />
-                                 <path
-                                     d="M19 11H5C4.44772 11 4 11.4477 4 12V14C4 14.5523 4.44772 15 5 15H19C19.5523 15 20 14.5523 20 14V12C20 11.4477 19.5523 11 19 11Z"
-                                     fill="#763ed0" />
-                                 <path
-                                     d="M19 16H5C4.44772 16 4 16.4477 4 17V19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V17C20 16.4477 19.5523 16 19 16Z"
-                                     fill="#763ed0" />
-                                 <path opacity="0.4" d="M8 8H10" stroke="#B9A8FF" stroke-width="1.5"
-                                     stroke-linecap="round" />
-                                 <path opacity="0.4" d="M8 13H10" stroke="#B9A8FF" stroke-width="1.5"
-                                     stroke-linecap="round" />
-                                 <path opacity="0.4" d="M8 18H10" stroke="#B9A8FF" stroke-width="1.5"
-                                     stroke-linecap="round" />
-                                 <path opacity="0.4" d="M14 8H16" stroke="#B9A8FF" stroke-width="1.5"
-                                     stroke-linecap="round" />
-                                 <path opacity="0.4" d="M14 13H16" stroke="#B9A8FF" stroke-width="1.5"
-                                     stroke-linecap="round" />
-                                 <path opacity="0.4" d="M14 18H16" stroke="#B9A8FF" stroke-width="1.5"
-                                     stroke-linecap="round" />
-                             </svg>
-                         </div>
 
-                         <span class="nav-text">Inventory</span>
-                     </a>
-                     <ul aria-expanded="false">
+             <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+                     <div class="menu-icon">
+                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                             <path
+                                 d="M19 6H5C4.44772 6 4 6.44772 4 7V9C4 9.55228 4.44772 10 5 10H19C19.5523 10 20 9.55228 20 9V7C20 6.44772 19.5523 6 19 6Z"
+                                 fill="#763ed0" />
+                             <path
+                                 d="M19 11H5C4.44772 11 4 11.4477 4 12V14C4 14.5523 4.44772 15 5 15H19C19.5523 15 20 14.5523 20 14V12C20 11.4477 19.5523 11 19 11Z"
+                                 fill="#763ed0" />
+                             <path
+                                 d="M19 16H5C4.44772 16 4 16.4477 4 17V19C4 19.5523 4.44772 20 5 20H19C19.5523 20 20 19.5523 20 19V17C20 16.4477 19.5523 16 19 16Z"
+                                 fill="#763ed0" />
+                             <path opacity="0.4" d="M8 8H10" stroke="#B9A8FF" stroke-width="1.5"
+                                 stroke-linecap="round" />
+                             <path opacity="0.4" d="M8 13H10" stroke="#B9A8FF" stroke-width="1.5"
+                                 stroke-linecap="round" />
+                             <path opacity="0.4" d="M8 18H10" stroke="#B9A8FF" stroke-width="1.5"
+                                 stroke-linecap="round" />
+                             <path opacity="0.4" d="M14 8H16" stroke="#B9A8FF" stroke-width="1.5"
+                                 stroke-linecap="round" />
+                             <path opacity="0.4" d="M14 13H16" stroke="#B9A8FF" stroke-width="1.5"
+                                 stroke-linecap="round" />
+                             <path opacity="0.4" d="M14 18H16" stroke="#B9A8FF" stroke-width="1.5"
+                                 stroke-linecap="round" />
+                         </svg>
+                     </div>
+
+                     <span class="nav-text">Inventory</span>
+                 </a>
+                 <ul aria-expanded="false">
+                     @if (auth()->user()->getRoleNames()->first() === 'Vendor')
                          <li><a href="{{ route('inventory.index') }}">List</a></li>
                          <li><a href="{{ route('inventory.create') }}">Create Inventory</a></li>
-                     </ul>
-                 </li>
-             @endif
+                     @endif
+                     @if (auth()->user()->getRoleNames()->first() === 'Super Admin' ||
+                             auth()->user()->getRoleNames()->first() === 'Portal Manager' ||
+                             auth()->user()->getRoleNames()->first() === 'Customer Service')
+                         <li><a href="{{ route('inventory.view.all') }}">All Inventory</a></li>
+                     @endif
+                 </ul>
+             </li>
 
              @if (auth()->user()->getRoleNames()->first() === 'Super Admin')
                  <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
