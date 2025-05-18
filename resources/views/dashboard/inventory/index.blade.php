@@ -37,7 +37,9 @@
                                     <td>
                                         @if ($item->image && file_exists(public_path('storage/' . $item->image)))
                                             <img src="{{ asset('storage/' . $item->image) }}" alt="Image"
-                                                class="rounded-circle" width="50" height="50">
+                                                class="rounded-circle" width="50" height="50"
+                                                style="cursor: pointer;"
+                                                onclick="showAvatarModal('{{ asset('storage/' . $item->image) }}')">
                                         @else
                                             <svg width="50" height="50" class="rounded bg-light"
                                                 xmlns="http://www.w3.org/2000/svg" fill="#ccc" viewBox="0 0 24 24">

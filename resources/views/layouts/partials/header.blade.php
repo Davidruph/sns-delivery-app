@@ -696,7 +696,7 @@
                             Dashboard
                         </div>
                     </div>
-                    <ul class="navbar-nav header-right">
+                    {{-- <ul class="navbar-nav header-right">
                         <li class="nav-item d-flex align-items-start">
                             <div class="input-group search-area">
                                 <input type="text" class="form-control" id="search"
@@ -714,7 +714,7 @@
                                     </a></span>
                             </div>
                         </li>
-                    </ul>
+                    </ul> --}}
                     <div class="dropdown header-profile2 ">
                         <ul class="navbar-nav header-right me-sm-4">
                             <li class="nav-item dropdown notification_dropdown">

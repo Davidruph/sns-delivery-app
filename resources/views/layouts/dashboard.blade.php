@@ -116,6 +116,22 @@
     ***********************************-->
     <audio id="notification-sound" src="{{ asset('/sound.mp3') }}" preload="auto"></audio>
 
+    <!-- Avatar Modal -->
+    <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-white">
+                <div class="modal-header">
+                    {{-- <h5 class="modal-title" id="avatarModalLabel">User Avatar</h5> --}}
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="avatarModalImg" src="" class="img-fluid rounded" alt="User Avatar">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script src="{{ asset('vendor/global/global.min.js') }}"></script>
     <script src="{{ asset('vendor/chart.js/Chart.bundle.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-nice-select/js/jquery.nice-select.min.js') }}"></script>
@@ -218,6 +234,16 @@
             }
         });
     </script>
+
+    <script>
+        function showAvatarModal(src) {
+            const modalImg = document.getElementById('avatarModalImg');
+            modalImg.src = src;
+            const avatarModal = new bootstrap.Modal(document.getElementById('avatarModal'));
+            avatarModal.show();
+        }
+    </script>
+
 </body>
 
 </html>

@@ -17,6 +17,7 @@
                         <thead>
                             <tr>
                                 <th style="width:80px;"><strong>#</strong></th>
+                                <th><strong>AVATAR</strong></th>
                                 <th><strong>USERNAME</strong></th>
                                 <th><strong>NAME</strong></th>
                                 <th><strong>EMAIL</strong></th>
@@ -31,6 +32,23 @@
                             @foreach ($vendors as $user)
                                 <tr>
                                     <td><strong>{{ $loop->iteration }}</strong></td>
+                                    <td>
+                                        @if ($user->avatar)
+                                            <img src="{{ asset('storage/' . $user->avatar) }}" alt="Avatar"
+                                                class="rounded-circle" width="50" height="50"
+                                                style="cursor: pointer;"
+                                                onclick="showAvatarModal('{{ asset('storage/' . $user->avatar) }}')">
+                                        @else
+                                            <svg width="50" height="50" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                class="rounded-circle bg-secondary text-white">
+                                                <circle cx="12" cy="12" r="12" fill="#ccc" />
+                                                <path
+                                                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4 -4 1.79-4 4 1.79 4 4 4zM12 14c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                                                    fill="#fff" />
+                                            </svg>
+                                        @endif
+                                    </td>
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
