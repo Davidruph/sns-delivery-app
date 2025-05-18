@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2025 at 04:02 PM
+-- Generation Time: May 18, 2025 at 06:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -193,7 +193,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (7, '2025_05_12_153619_create_orders_table', 4),
 (8, '2025_05_12_154240_create_order_items_table', 4),
 (9, '2025_05_15_130526_create_notifications_table', 5),
-(10, '2025_05_17_135728_create_store_settings_table', 6);
+(10, '2025_05_17_135728_create_store_settings_table', 6),
+(11, '2025_05_18_125635_add_avatar_to_users_table', 7);
 
 -- --------------------------------------------------------
 
@@ -271,10 +272,12 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('500c0c33-9b3d-4c3e-b3fa-541186e13000', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #34 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/34\\/view\",\"order_id\":34}', NULL, '2025-05-17 11:38:41', '2025-05-17 11:38:41'),
 ('5f39f706-fb02-470e-84bd-cccdda8180ac', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #39 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/39\\/view\",\"order_id\":39}', NULL, '2025-05-17 11:56:01', '2025-05-17 11:56:01'),
 ('5fca5ca3-d352-4ddd-b0cd-f3082b5d76f4', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #42 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/42\\/view\",\"order_id\":42}', NULL, '2025-05-17 12:07:31', '2025-05-17 12:07:31'),
+('6efd4cb6-581d-4768-95e7-8e7e3d32b171', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #44 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/44\\/view\",\"order_id\":44}', NULL, '2025-05-17 13:18:36', '2025-05-17 13:18:36'),
 ('6fd8a832-d867-4a29-857a-276b459e0ecf', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #32 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/32\\/view\",\"order_id\":32}', NULL, '2025-05-17 10:58:33', '2025-05-17 10:58:33'),
 ('9048fd5d-6dce-4f7b-9ec6-a70f4eea8247', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #40 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/40\\/view\",\"order_id\":40}', NULL, '2025-05-17 11:59:16', '2025-05-17 11:59:16'),
 ('9310e5d0-483e-4a6a-afd0-d5783ecf42c9', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 1, '{\"title\":\"New Order Received\",\"message\":\"Order #40 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/40\\/view\",\"order_id\":40}', NULL, '2025-05-17 11:59:16', '2025-05-17 11:59:16'),
 ('93c8204f-ffd6-413b-8077-769a79bdd48c', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #32 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/32\\/view\",\"order_id\":32}', NULL, '2025-05-17 10:58:33', '2025-05-17 10:58:33'),
+('9959c7b8-8a65-42a9-99d4-09ca929b489e', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #44 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/44\\/view\",\"order_id\":44}', NULL, '2025-05-17 13:18:36', '2025-05-17 13:18:36'),
 ('9e66048b-922d-47e2-81a8-c808d1d54498', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #41 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/41\\/view\",\"order_id\":41}', NULL, '2025-05-17 12:00:47', '2025-05-17 12:00:47'),
 ('9fcad2ea-7abe-4731-86af-ece2a71005c2', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 1, '{\"title\":\"New Order Received\",\"message\":\"Order #37 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/37\\/view\",\"order_id\":37}', NULL, '2025-05-17 11:52:16', '2025-05-17 11:52:16'),
 ('a046b46e-9dfe-4642-b64b-0d5b9b445fe1', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 1, '{\"title\":\"New Order Received\",\"message\":\"Order #41 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/41\\/view\",\"order_id\":41}', NULL, '2025-05-17 12:00:47', '2025-05-17 12:00:47'),
@@ -290,6 +293,7 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('d8caa0af-d8a2-4b0b-9d4f-ea310b06df89', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 1, '{\"title\":\"New Order Received\",\"message\":\"Order #36 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/36\\/view\",\"order_id\":36}', NULL, '2025-05-17 11:48:54', '2025-05-17 11:48:54'),
 ('e6085c70-13aa-4849-9bfc-f88ae82138a6', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #37 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/37\\/view\",\"order_id\":37}', NULL, '2025-05-17 11:52:16', '2025-05-17 11:52:16'),
 ('e8c61a36-3867-4ff5-a39e-2a29f9df715f', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 1, '{\"title\":\"New Order Received\",\"message\":\"Order #38 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/38\\/view\",\"order_id\":38}', NULL, '2025-05-17 11:53:15', '2025-05-17 11:53:15'),
+('eb565102-6100-4038-833e-2e9b087498c2', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 1, '{\"title\":\"New Order Received\",\"message\":\"Order #44 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/44\\/view\",\"order_id\":44}', NULL, '2025-05-17 13:18:36', '2025-05-17 13:18:36'),
 ('f6ea89a6-7710-41f1-a6db-79a9c2579211', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 1, '{\"title\":\"New Order Received\",\"message\":\"Order #43 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/43\\/view\",\"order_id\":43}', NULL, '2025-05-17 12:46:58', '2025-05-17 12:46:58');
 
 -- --------------------------------------------------------
@@ -352,7 +356,8 @@ INSERT INTO `orders` (`id`, `user_id`, `name`, `address`, `email`, `phone`, `sta
 (40, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Not available', 'we don\'t fish container', '2025-05-17 11:59:16', '2025-05-17 12:45:57'),
 (41, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Pending', NULL, '2025-05-17 12:00:47', '2025-05-17 12:00:47'),
 (42, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Delivery Arranged', 'we are currently arranging the delivery', '2025-05-17 12:07:31', '2025-05-17 12:20:58'),
-(43, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Delivered', 'delivered', '2025-05-17 12:46:58', '2025-05-17 12:47:29');
+(43, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Delivered', 'delivered', '2025-05-17 12:46:58', '2025-05-17 12:47:29'),
+(44, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Pending', NULL, '2025-05-17 13:18:35', '2025-05-17 13:18:35');
 
 -- --------------------------------------------------------
 
@@ -418,7 +423,8 @@ INSERT INTO `order_items` (`id`, `order_id`, `inventory_id`, `quantity`, `amount
 (49, 40, 8, 2, 3.00, '2025-05-17 11:59:16', '2025-05-17 11:59:16'),
 (50, 41, 7, 5, 6.00, '2025-05-17 12:00:47', '2025-05-17 12:00:47'),
 (51, 42, 8, 3, 45.00, '2025-05-17 12:07:31', '2025-05-17 12:07:31'),
-(52, 43, 7, 1, 20.00, '2025-05-17 12:46:58', '2025-05-17 12:46:58');
+(52, 43, 7, 1, 20.00, '2025-05-17 12:46:58', '2025-05-17 12:46:58'),
+(53, 44, 7, 4, 5.00, '2025-05-17 13:18:36', '2025-05-17 13:18:36');
 
 -- --------------------------------------------------------
 
@@ -501,8 +507,34 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('af4AClvhIorjRo9rk3VbPLMczhHjAFCrMOdkiRuX', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNlBzQmNhUmpHd1R2WFg0QnpGNkpudzBHeEc4ZHdKNko1a1Q0VVhLdSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1747489702),
-('QrzHl05vcGToa2uxI93JYlKXAbbRDq9RBaN0zLeY', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZnBIQ1hBenZHdU5reGFBb1kwNzg5alhkU1I5RHgxeDlrNzROZlpBbiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zdG9yZS1zZXR0aW5ncyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1747490049);
+('5da8jeBLPidfyGdqIandQuUtVZRCH15iqxarGGwg', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiT0FWeURLcHhYRTFoMlN1TDNTVGpDRFJ1OFZhWE5GZjlqaWZabWFyWiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1747582818);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stores`
+--
+
+CREATE TABLE `stores` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `group_id` varchar(255) NOT NULL,
+  `store_name` varchar(255) NOT NULL,
+  `store_phone` varchar(255) NOT NULL,
+  `store_currency` varchar(255) NOT NULL,
+  `store_currency_symbol` varchar(255) NOT NULL,
+  `store_logo` varchar(255) DEFAULT NULL,
+  `store_address` text NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `stores`
+--
+
+INSERT INTO `stores` (`id`, `user_id`, `group_id`, `store_name`, `store_phone`, `store_currency`, `store_currency_symbol`, `store_logo`, `store_address`, `created_at`, `updated_at`) VALUES
+(1, 1, '151175', 'SDN', '0905854844', 'Naira', '₦', 'store_logos/6829e7d5efeec.png', 'FUNTAZ', '2025-05-18 12:59:50', '2025-05-18 14:10:19');
 
 -- --------------------------------------------------------
 
@@ -536,6 +568,7 @@ CREATE TABLE `users` (
   `phone` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
@@ -547,12 +580,12 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `group_id`, `plan`, `name`, `username`, `phone`, `address`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '151175', 'free', 'David Agbugba', 'Davidruph', '0905874974', 'plot 76 pasali extension', 'juniord.dj88@gmail.com', NULL, '$2y$12$DpPSWIT1/t/6jHr3qTG//.U6MDlU4Imw41nicRChcBzlZWwuJ.VzK', NULL, '2025-05-06 23:35:50', '2025-05-07 09:31:37'),
-(2, '151175', NULL, 'David Manny', 'lukas', '08081233897', 'plot 76 pasali extension', 'juniord.dj88+1@gmail.com', NULL, '$2y$12$aBJBZn4VR4nr3Iu6Ns5LgOtWW87G4P7iY2pFxJm/zpazvtaY3SnC.', NULL, '2025-05-07 09:55:39', '2025-05-07 09:55:39'),
-(3, '151175', 'free', 'Paulson Barb', 'Paulson', '00847487444', 'Suleja', 'juniord.dj88+2@gmail.com', NULL, '$2y$12$KIjiHjNIWNSY0dUyZ.mQLumxLbkgu.hYid2qzpgmzthYsZ2yBpqWy', NULL, '2025-05-07 10:21:30', '2025-05-07 10:21:30'),
-(4, '151175', 'free', 'Romania Ruth', 'Vendor 1', '0938378443', 'Abuja', 'juniord.dj88+3@gmail.com', NULL, '$2y$12$SwzNNv8W83zO4/TaEroK1eIBJzynmE/vUomfSAPZKbJs9Wnw3RX7C', NULL, '2025-05-07 10:22:53', '2025-05-07 11:02:05'),
-(5, '151175', 'free', 'Rose Sampe', 'liqorose', '0003837833', 'plot 76 pasali extensions', 'juniord.dj88+4@gmail.com', NULL, '$2y$12$dhmDxYWqkmO0XaHn38xK1epAs6EJ63Jm09fpNyBwzuBqLhvZE0lrO', NULL, '2025-05-12 11:57:51', '2025-05-12 11:58:32');
+INSERT INTO `users` (`id`, `group_id`, `plan`, `name`, `username`, `phone`, `address`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, '151175', 'free', 'David Agbugba', 'Davidruph', '0905874974', 'plot 76 pasali extension', 'juniord.dj88@gmail.com', 'avatar_images/6829db03ebc65.jpg', NULL, '$2y$12$DpPSWIT1/t/6jHr3qTG//.U6MDlU4Imw41nicRChcBzlZWwuJ.VzK', NULL, '2025-05-06 23:35:50', '2025-05-18 12:05:07'),
+(2, '151175', NULL, 'David Manny', 'lukas', '08081233897', 'plot 76 pasali extension', 'juniord.dj88+1@gmail.com', NULL, NULL, '$2y$12$aBJBZn4VR4nr3Iu6Ns5LgOtWW87G4P7iY2pFxJm/zpazvtaY3SnC.', NULL, '2025-05-07 09:55:39', '2025-05-07 09:55:39'),
+(3, '151175', 'free', 'Paulson Barb', 'Paulson', '00847487444', 'Suleja', 'juniord.dj88+2@gmail.com', NULL, NULL, '$2y$12$KIjiHjNIWNSY0dUyZ.mQLumxLbkgu.hYid2qzpgmzthYsZ2yBpqWy', NULL, '2025-05-07 10:21:30', '2025-05-07 10:21:30'),
+(4, '151175', 'free', 'Romania Ruth', 'Vendor 1', '0938378443', 'Abuja', 'juniord.dj88+3@gmail.com', NULL, NULL, '$2y$12$SwzNNv8W83zO4/TaEroK1eIBJzynmE/vUomfSAPZKbJs9Wnw3RX7C', NULL, '2025-05-07 10:22:53', '2025-05-07 11:02:05'),
+(5, '151175', 'free', 'Rose Sampe', 'liqorose', '0003837833', 'plot 76 pasali extensions', 'juniord.dj88+4@gmail.com', NULL, NULL, '$2y$12$dhmDxYWqkmO0XaHn38xK1epAs6EJ63Jm09fpNyBwzuBqLhvZE0lrO', NULL, '2025-05-12 11:57:51', '2025-05-12 11:58:32');
 
 --
 -- Indexes for dumped tables
@@ -675,6 +708,13 @@ ALTER TABLE `sessions`
   ADD KEY `sessions_last_activity_index` (`last_activity`);
 
 --
+-- Indexes for table `stores`
+--
+ALTER TABLE `stores`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `stores_user_id_foreign` (`user_id`);
+
+--
 -- Indexes for table `store_settings`
 --
 ALTER TABLE `store_settings`
@@ -709,25 +749,25 @@ ALTER TABLE `inventories`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -740,6 +780,12 @@ ALTER TABLE `permissions`
 --
 ALTER TABLE `roles`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `stores`
+--
+ALTER TABLE `stores`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `store_settings`
@@ -794,6 +840,12 @@ ALTER TABLE `order_items`
 ALTER TABLE `role_has_permissions`
   ADD CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `stores`
+--
+ALTER TABLE `stores`
+  ADD CONSTRAINT `stores_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
