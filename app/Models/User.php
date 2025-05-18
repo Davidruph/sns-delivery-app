@@ -58,8 +58,8 @@ class User extends Authenticatable
         return $this->hasMany(User::class, 'group_id', 'group_id');
     }
 
-    public function storeSetting()
+    public function store()
     {
-        return $this->hasOne(StoreSetting::class, 'group_id', 'group_id');
+        return $this->hasOne(Store::class, 'group_id', 'group_id');
     }
 }

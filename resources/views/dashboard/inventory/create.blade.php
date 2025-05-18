@@ -66,16 +66,24 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="cost_price"><strong>Cost Price</strong></label>
-                                <input type="number" step="0.01" name="cost_price" id="cost_price" class="form-control"
-                                    value="{{ old('cost_price') }}" required>
+
+                                <div class="input-group">
+                                    <span class="input-group-text"
+                                        id="basic-addon1">{{ Auth::user()->store->store_currency_symbol }}</span>
+                                    <input type="number" step="0.01" name="cost_price" id="cost_price"
+                                        class="form-control" value="{{ old('cost_price') }}" required>
+                                </div>
                             </div>
 
                             <div class="col">
                                 <label for="selling_price"><strong>Selling Price</strong></label>
-                                <input type="number" step="0.01" name="selling_price" id="selling_price"
-                                    class="form-control" value="{{ old('selling_price') }}" required>
+                                <div class="input-group">
+                                    <span class="input-group-text"
+                                        id="basic-addon1">{{ Auth::user()->store->store_currency_symbol }}</span>
+                                    <input type="number" step="0.01" name="selling_price" id="selling_price"
+                                        class="form-control" value="{{ old('selling_price') }}" required>
+                                </div>
                             </div>
-
                         </div>
 
                         <div class="mb-3">

@@ -12,8 +12,18 @@
                     <h4 class="card-title">Profile</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('profile.update', $user->id) }}" method="POST">
+                    <form action="{{ route('profile.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
+
+                        <div class="mb-3">
+                            <label for="avatar"><strong>Avatar</strong></label><br>
+                            @if ($user->avatar)
+                                <img src="{{ asset('storage/' . $user->avatar) }}" alt="Current Avatar" width="100"
+                                    class="mb-2 rounded">
+                            @endif
+                            <input type="file" name="avatar" id="avatar" class="form-control">
+                        </div>
+
                         <div class="mb-3">
                             <label for="username"><strong>Username</strong></label>
                             <input type="text" name="username" id="username" class="form-control"
@@ -48,6 +58,7 @@
                             <button type="submit" class="btn btn-primary btn-block">Update</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

@@ -48,8 +48,14 @@
                                     <input type="number" name="quantity[]" class="form-control" required>
                                 </div>
                                 <div class="col-3">
-                                    <label><strong>Amount/Price</strong></label>
-                                    <input type="number" name="amount[]" class="form-control" required>
+                                    <label><strong>Amount/Price in
+                                            {{ Auth::user()->store->store_currency }}</strong></label>
+
+                                    <div class="input-group">
+                                        <span class="input-group-text"
+                                            id="basic-addon1">{{ Auth::user()->store->store_currency_symbol }}</span>
+                                        <input type="number" name="amount[]" class="form-control" required>
+                                    </div>
                                 </div>
                                 <div class="col-2">
                                     <label><strong>&nbsp;</strong></label>

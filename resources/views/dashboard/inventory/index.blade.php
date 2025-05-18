@@ -48,8 +48,8 @@
                                     </td>
 
                                     <td>{{ $item->quantity }}</td>
-                                    <td>{{ $item->cost_price }}</td>
-                                    <td>{{ $item->selling_price }}</td>
+                                    <td>{{ Auth::user()->store->store_currency_symbol . ' ' . $item->cost_price }}</td>
+                                    <td>{{ Auth::user()->store->store_currency_symbol . ' ' . $item->selling_price }}</td>
                                     <td>{{ $item->description }}</td>
                                     <td>{{ $item->created_at->format('d-m-Y') }}</td>
                                     <td>

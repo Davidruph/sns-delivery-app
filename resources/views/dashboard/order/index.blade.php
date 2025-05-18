@@ -63,7 +63,8 @@
                                     <td>
                                         <ul class="list-unstyled mb-0">
                                             @foreach ($order->items as $item)
-                                                <li>₦{{ number_format($item->amount, 2) }}</li>
+                                                <li>{{ Auth::user()->store->store_currency_symbol . ' ' . number_format($item->amount, 2) }}
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </td>

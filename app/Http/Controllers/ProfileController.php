@@ -21,11 +21,31 @@ class ProfileController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $request->user()->id,
             'username' => 'required|string|max:255|unique:users,username,' . $request->user()->id,
             'phone' => 'required|string|max:255',
-            'address' => 'required|string|max:255'
+            'address' => 'required|string|max:255',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $user = $request->user();
+
+        // Handle avatar upload
+        if ($request->hasFile('avatar')) {
+            $image = $request->file('avatar');
+
+            // Generate a unique filename with extension
+            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+
+            // Save to storage/app/public/avatar_images
+            $imagePath = $image->storeAs('avatar_images', $filename, 'public');
+
+            // Save only the path or filename to the DB
+            $user->avatar = $imagePath;
+        }
+
         $user->update($request->only('name', 'email', 'username', 'phone', 'address'));
+
+        if ($request->hasFile('avatar')) {
+            $user->save(); // Save after setting avatar
+        }
 
         // Log out the user
         Auth::logout();
