@@ -146,6 +146,10 @@
     <script src="{{ asset('js/custom.min.js') }}"></script>
     <script src="{{ asset('js/dlabnav-init.js') }}"></script>
     <script src="js/demo.js"></script>
+    <script src="{{ asset('js/styleSwitcher.js') }}"></script>
+    <script>
+        addSwitcher();
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const productContainer = document.getElementById('product-container');

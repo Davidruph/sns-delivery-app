@@ -25,7 +25,7 @@
     <script src="{{ asset('vendor/jquery-autocomplete/jquery-ui.js') }}"></script>
     <script src="{{ asset('js/custom.min.js') }}"></script>
     <script src="{{ asset('js/dlabnav-init.js') }}"></script>
-    {{-- <script src="{{ asset('js/styleSwitcher.js') }}"></script> --}}
+    <script src="{{ asset('js/styleSwitcher.js') }}"></script>
 </body>
 
 </html>

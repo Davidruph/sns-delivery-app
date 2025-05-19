@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Store orders Page')
+@section('title', 'Order create Page')
 
 @section('content')
     @include('alerts.index')
