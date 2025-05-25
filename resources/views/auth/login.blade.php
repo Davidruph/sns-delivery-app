@@ -25,9 +25,12 @@
                                     <form action="{{ route('login.post') }}" method="POST" class="mt-4">
                                         @csrf
                                         <div class="mb-3">
-                                            <label class="mb-1"><strong>Email</strong></label>
-                                            <input type="email" name="email" placeholder="hello@example.com"
-                                                class="form-control" value="{{ old('email') }}" required autofocus>
+                                            <label class="mb-1"><strong>Email/Username</strong></label>
+
+                                            <input type="text" name="login" class="form-control"
+                                                placeholder="Username or Email" value="{{ old('email') }}" required
+                                                autofocus>
+
                                         </div>
                                         <div class="mb-3">
                                             <label class="mb-1"><strong>Password</strong></label>

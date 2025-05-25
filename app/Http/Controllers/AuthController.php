@@ -61,16 +61,20 @@ class AuthController extends Controller
     public function authenticate(Request $request)
     {
         $request->validate([
-            'email' => ['required', 'string', 'email'],
+            'login' => ['required', 'string'],
             'password' => ['required', 'string'],
         ]);
 
-        if (! Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+        $loginType = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        if (!Auth::attempt([$loginType => $request->input('login'), 'password' => $request->input('password')], $request->boolean('remember'))) {
             return back()->withErrors([
-                'email' => __('auth.failed'),
-            ]);
+                'login' => __('auth.failed'),
+            ])->withInput($request->only('login'));
         }
+
         $request->session()->regenerate();
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

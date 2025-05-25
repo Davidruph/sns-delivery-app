@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class InventoryController extends Controller
 {
@@ -40,7 +41,14 @@ class InventoryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:inventories,name',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('inventories')->where(function ($query) {
+                    return $query->where('user_id', Auth::id());
+                }),
+            ],
             'category' => 'required|string',
             'quantity' => 'required|integer|min:0',
             'description' => 'nullable|string',
@@ -58,13 +66,19 @@ class InventoryController extends Controller
             // Generate a unique filename with extension
             $filename = uniqid() . '.' . $image->getClientOriginalExtension();
 
-            // Save to storage/app/public/inventory_images
-            $imagePath = $image->storeAs('inventory_images', $filename, 'public');
+            // Save to public_html/storage/inventory_images
+            $destinationPath = $_SERVER['DOCUMENT_ROOT'] . '/storage/inventory_images';
 
-            // Save only the path or filename to the DB
-            $validated['image'] = $imagePath;
+            // Create directory if it doesn't exist
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
 
-            // dd($imagePath, $validated['image']);
+            // Move the uploaded file
+            $image->move($destinationPath, $filename);
+
+            // Save relative path to DB
+            $validated['image'] = 'inventory_images/' . $filename;
         }
 
         // Optionally attach the currently logged-in user

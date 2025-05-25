@@ -69,7 +69,7 @@
 
                                 <div class="input-group">
                                     <span class="input-group-text"
-                                        id="basic-addon1">{{ Auth::user()->store->store_currency_symbol }}</span>
+                                        id="basic-addon1">{{ optional(Auth::user()->store)->store_currency_symbol }}</span>
                                     <input type="number" step="0.01" name="cost_price" id="cost_price"
                                         class="form-control" value="{{ old('cost_price') }}" required>
                                 </div>
@@ -79,7 +79,7 @@
                                 <label for="selling_price"><strong>Selling Price</strong></label>
                                 <div class="input-group">
                                     <span class="input-group-text"
-                                        id="basic-addon1">{{ Auth::user()->store->store_currency_symbol }}</span>
+                                        id="basic-addon1">{{ optional(Auth::user()->store)->store_currency_symbol }}</span>
                                     <input type="number" step="0.01" name="selling_price" id="selling_price"
                                         class="form-control" value="{{ old('selling_price') }}" required>
                                 </div>

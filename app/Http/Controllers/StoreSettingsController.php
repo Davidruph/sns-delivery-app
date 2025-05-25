@@ -31,8 +31,19 @@ class StoreSettingsController extends Controller
         if ($request->hasFile('store_logo')) {
             $image = $request->file('store_logo');
             $filename = uniqid() . '.' . $image->getClientOriginalExtension();
-            $imagePath = $image->storeAs('store_logos', $filename, 'public');
-            $store_logo = $imagePath;
+
+            // Use public_html/storage/store_logos
+            $destinationPath = $_SERVER['DOCUMENT_ROOT'] . '/storage/store_logos';
+
+            // Create directory if not exists
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            $image->move($destinationPath, $filename);
+
+            // Save relative path for DB
+            $store_logo = 'store_logos/' . $filename;
         }
 
         $user = $request->user();

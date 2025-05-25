@@ -34,11 +34,19 @@ class ProfileController extends Controller
             // Generate a unique filename with extension
             $filename = uniqid() . '.' . $image->getClientOriginalExtension();
 
-            // Save to storage/app/public/avatar_images
-            $imagePath = $image->storeAs('avatar_images', $filename, 'public');
+            // Save to public_html/storage/avatar_images
+            $destinationPath = $_SERVER['DOCUMENT_ROOT'] . '/storage/avatar_images';
 
-            // Save only the path or filename to the DB
-            $user->avatar = $imagePath;
+            // Create directory if it doesn't exist
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            // Move the uploaded file
+            $image->move($destinationPath, $filename);
+
+            // Save relative path to DB
+            $user->avatar = 'avatar_images/' . $filename;
         }
 
         $user->update($request->only('name', 'email', 'username', 'phone', 'address'));

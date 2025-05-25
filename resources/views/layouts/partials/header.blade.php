@@ -4,8 +4,9 @@
     <div class="nav-header">
         <a href="{{ route('dashboard') }}" class="brand-logo">
             <div class="logo">
-                @if (Auth::user()->store->store_logo)
-                    <img src="{{ asset('storage/' . Auth::user()->store->store_logo) }}" alt="Avatar" class="logo-abbr">
+                @if (optional(Auth::user()->store)->store_logo)
+                    <img src="{{ asset('storage/' . optional(Auth::user()->store)->store_logo) }}" alt="store logo"
+                        class="logo-abbr">
 
                     {{-- <svg class="brand-title" width="124" height="33" viewBox="0 0 132 33" fill="none"
                         xmlns="http://www.w3.org/2000/svg">

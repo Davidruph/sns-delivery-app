@@ -35,7 +35,7 @@
                                     <td><strong>{{ $loop->iteration }}</strong></td>
                                     <td>{{ $item->name }}</td>
                                     <td>
-                                        @if ($item->image && file_exists(public_path('storage/' . $item->image)))
+                                        @if ($item->image && file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . 'storage/' . $item->image))
                                             <img src="{{ asset('storage/' . $item->image) }}" alt="Image"
                                                 class="rounded-circle" width="50" height="50"
                                                 style="cursor: pointer;"
