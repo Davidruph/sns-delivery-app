@@ -24,7 +24,8 @@ class InventoryController extends Controller
     {
         $userIds = Auth::user()->groupUsers->pluck('id');
 
-        $inventory = Inventory::whereIn('user_id', $userIds)
+        $inventory = Inventory::with('user')
+            ->whereIn('user_id', $userIds)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 

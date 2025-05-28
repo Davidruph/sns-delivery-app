@@ -42,7 +42,10 @@ class OrderController extends Controller
     public function create()
     {
         $user = User::where('id', Auth::user()->id)->first();
-        $products = Inventory::where('user_id', Auth::user()->id)->select('id', 'name')->get();
+        $products = Inventory::where('user_id', Auth::user()->id)
+            ->where('quantity', '>', 0)
+            ->select('id', 'name', 'quantity')
+            ->get();
         return view('dashboard.order.create', compact('user', 'products'));
     }
 
@@ -54,6 +57,25 @@ class OrderController extends Controller
             'amount.*' => 'required|numeric|min:0',
             'address' => 'required|string|max:255',
         ]);
+
+        // Validate requested quantities against inventory
+        foreach ($request->product as $index => $productId) {
+            $inventory = Inventory::where('id', $productId)
+                ->where('user_id', Auth::id()) // ensure vendor owns the inventory
+                ->first();
+
+            if (!$inventory) {
+                return back()->withErrors(["Product at index $index is not found in your inventory."]);
+            }
+
+            $requestedQty = $request->quantity[$index];
+
+            if ($requestedQty > $inventory->quantity) {
+                return back()->withErrors([
+                    "Product '{$inventory->name}' has only {$inventory->quantity} items left in stock."
+                ])->withInput();
+            }
+        }
 
         DB::transaction(function () use ($request) {
             // Create the order
@@ -67,14 +89,20 @@ class OrderController extends Controller
 
             // Loop through products and attach them
             foreach ($request->product as $index => $productId) {
+                $requestedQty = $request->quantity[$index];
+
                 OrderItem::create([
                     'order_id' => $order->id,
                     'inventory_id' => $productId,
-                    'quantity' => $request->quantity[$index],
+                    'quantity' => $requestedQty,
                     'amount' => $request->amount[$index],
                 ]);
+
+                // Decrease inventory quantity
+                // Inventory::where('id', $productId)->decrement('quantity', $requestedQty);
             }
 
+            // Notify admins
             $rolesToNotify = ['Super Admin', 'Portal Manager', 'Customer Service'];
             $superAdmins = User::role($rolesToNotify)
                 ->where('group_id', Auth::user()->group_id)
@@ -145,12 +173,21 @@ class OrderController extends Controller
 
                 if ($itemId) {
                     $order->items()->where('id', $itemId)->update($data);
+                    $rolesToNotify = ['Super Admin', 'Portal Manager', 'Customer Service'];
+                    $superAdmins = User::role($rolesToNotify)
+                        ->where('group_id', Auth::user()->group_id)
+                        ->where('id', '!=', Auth::id())
+                        ->get();
+
+                    Notification::sendNow($superAdmins, new NewOrderNotification($order, 'Order updated'));
+                    Log::info('Notified users about order #' . $order->id, [
+                        'users' => $superAdmins->pluck('id')->toArray()
+                    ]);
                 } else {
                     $order->items()->create($data);
                 }
             }
         }
-
 
         return redirect()->route('order.index')->with('success', 'Order updated successfully.');
     }
@@ -183,12 +220,21 @@ class OrderController extends Controller
             'remark' => 'nullable|string|max:1000',
         ]);
 
+        // Update order status and remark
         $order->update([
             'status' => $request->order_status,
             'remark' => $request->remark,
         ]);
 
-        // Get the user who owns the order as a collection
+        // If status is 'delivered', reduce inventory quantities
+        if ($request->order_status === 'delivered') {
+            foreach ($order->orderItems as $item) {
+                Inventory::where('id', $item->inventory_id)
+                    ->decrement('quantity', $item->quantity);
+            }
+        }
+
+        // Notify the user
         $userToNotify = User::where('id', $order->user_id)->get();
 
         Notification::sendNow($userToNotify, new NewOrderNotification(
@@ -200,8 +246,6 @@ class OrderController extends Controller
 
         return back()->with('success', 'Order status updated.');
     }
-
-
 
     public function destroy(Order $order)
     {

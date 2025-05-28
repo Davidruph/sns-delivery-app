@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone=no">
 
-    <link rel="shortcut icon" type="image/png" href="{{ asset('images/favicon.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/fav-01.png') }}">
     <link href="{{ asset('vendor/jquery-nice-select/css/nice-select.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/jquery-autocomplete/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -25,7 +25,7 @@
     <script src="{{ asset('vendor/jquery-autocomplete/jquery-ui.js') }}"></script>
     <script src="{{ asset('js/custom.min.js') }}"></script>
     <script src="{{ asset('js/dlabnav-init.js') }}"></script>
-    <script src="{{ asset('js/styleSwitcher.js') }}"></script>
+    {{-- <script src="{{ asset('js/styleSwitcher.js') }}"></script> --}}
 </body>
 
 </html>

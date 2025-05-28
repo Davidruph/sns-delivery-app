@@ -16,7 +16,8 @@
                         <thead>
                             <tr>
                                 <th style="width:80px;"><strong>#</strong></th>
-                                <th><strong>NAME</strong></th>
+                                <th><strong>VENDOR</strong></th>
+                                <th><strong>PRODUCT</strong></th>
                                 <th><strong>IMAGE</strong></th>
                                 <th><strong>QUANTITY</strong></th>
                                 {{-- <th><strong>COST PRICE</strong></th>
@@ -30,6 +31,7 @@
                             @foreach ($inventory as $item)
                                 <tr>
                                     <td><strong>{{ $loop->iteration }}</strong></td>
+                                    <td>{{ $item->user->name ?? 'N/A' }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>
                                         @if ($item->image && file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . 'storage/' . $item->image))

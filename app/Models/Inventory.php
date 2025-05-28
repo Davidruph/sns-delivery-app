@@ -17,4 +17,9 @@ class Inventory extends Model
         'cost_price',
         'selling_price'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -11,13 +11,13 @@
                         <div class="row m-0 align-items-center">
                             <div class="col-xl-6 col-md-6 sign text-center">
                                 <div>
-                                    <img src="{{ asset('images/log.png') }}" class="education-img"></img>
+                                    <img src="{{ asset('images/landing-pg01.png') }}" class="education-img"></img>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-md-6">
                                 <div class="sign-in-your">
-                                    <h1 class="mt-5">Welcome to the Delivery App</h1>
-                                    <p class="lead">This is a simple application to manage deliveries.</p>
+                                    <h1 class="mt-5">Welcome to Seekers Digital Network</h1>
+                                    <p class="lead">Effortless Delivery Management for Smarter Operations</p>
                                     <a href="{{ route('login') }}" class="btn btn-primary me-2">Login</a>
                                     <a href="{{ route('register') }}" class="btn btn-secondary">Register</a>
                                 </div>

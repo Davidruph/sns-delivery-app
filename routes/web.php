@@ -34,13 +34,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/users/update/{user}', [UserController::class, 'update'])->name('users.update');
         Route::post('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
-        Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
-        Route::get('/vendors/create', [VendorController::class, 'create'])->name('vendors.create');
-        Route::post('/vendors', [VendorController::class, 'store'])->name('vendors.store');
-        Route::get('/vendors/{user}/edit', [VendorController::class, 'edit'])->name('vendors.edit');
-        Route::post('/vendors/update/{user}', [VendorController::class, 'update'])->name('vendors.update');
-        Route::post('/vendors/{user}', [VendorController::class, 'destroy'])->name('vendors.destroy');
-
         Route::get('/store-settings', [StoreSettingsController::class, 'index'])->name('store.index');
         Route::post('/store-settings', [StoreSettingsController::class, 'update'])->name('store.update');
     });
@@ -49,6 +42,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/update/{user}', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
     Route::post('/profile/change-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
+
+    Route::middleware(['role:Super Admin|Portal Manager|Customer Service'])->group(function () {
+        Route::get('/vendors', [VendorController::class, 'index'])->name('vendors.index');
+        Route::get('/vendors/create', [VendorController::class, 'create'])->name('vendors.create');
+        Route::post('/vendors', [VendorController::class, 'store'])->name('vendors.store');
+        Route::get('/vendors/{user}/edit', [VendorController::class, 'edit'])->name('vendors.edit');
+        Route::post('/vendors/update/{user}', [VendorController::class, 'update'])->name('vendors.update');
+        Route::post('/vendors/{user}', [VendorController::class, 'destroy'])->name('vendors.destroy');
+    });
 
     Route::middleware(['role:Super Admin|Portal Manager|Customer Service|Vendor'])->group(function () {
         Route::get('/orders/view/all', [OrderController::class, 'view_all_orders'])->name('order.view.all');

@@ -11,14 +11,14 @@
                         <div class="row m-0 align-items-center">
                             <div class="col-xl-6 col-md-6 sign text-center">
                                 <div>
-                                    <img src="images/log.png" class="education-img"></img>
+                                    <img src="{{ asset('images/landing-pg01.png') }}" class="education-img"></img>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-md-6">
                                 <div class="sign-in-your">
-                                    <h3>Sign in your account</h3>
-                                    <span class="text-white">Welcome back! Login with your data that you entered<br> during
-                                        registration</span>
+                                    <h3 class="">Welcome to Seekers Digital Network</h3>
+                                    <span class="text-white">Log in to manage your deliveries, inventory, and order
+                                        statuses.</span>
 
                                     @include('alerts.index')
 

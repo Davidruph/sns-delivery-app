@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'User Page')
+@section('title', 'Vendor Page')
 
 @section('content')
     @include('alerts.index')
@@ -10,7 +10,9 @@
             <div class="card">
                 <div class="card-header justify-content-between align-items-center">
                     <h4 class="card-title">List of all Vendors</h4>
-                    <a href="{{ route('vendors.create') }}" class="btn btn-secondary">Create a Vendor</a>
+                    @if (auth()->user()->getRoleNames()->first() === 'Super Admin')
+                        <a href="{{ route('vendors.create') }}" class="btn btn-secondary">Create a Vendor</a>
+                    @endif
                 </div>
                 <div class="card-body">
                     <table class="table table-hover table-responsive-sm">

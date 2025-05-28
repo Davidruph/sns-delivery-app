@@ -19,10 +19,10 @@
                         <thead>
                             <tr>
                                 <th style="width:80px;"><strong>#</strong></th>
-                                {{-- <th><strong>NAME</strong></th>
-                                <th><strong>EMAIL</strong></th>
+                                <th><strong>FULL NAME</strong></th>
+                                {{-- <th><strong>EMAIL</strong></th> --}}
+                                <th><strong>PHONE</strong></th>
                                 <th><strong>ADDRESS</strong></th>
-                                <th><strong>PHONE</strong></th> --}}
                                 <th><strong>PRODUCT</strong></th>
                                 <th><strong>QTY</strong></th>
                                 <th><strong>AMOUNT</strong></th>
@@ -36,10 +36,10 @@
                             @foreach ($orders as $order)
                                 <tr>
                                     <td><strong>{{ $loop->iteration }}</strong></td>
-                                    {{-- <td>{{ $order->name }}</td>
-                                    <td>{{ $order->email }}</td>
+                                    <td>{{ $order->name }}</td>
+                                    {{-- <td>{{ $order->email }}</td> --}}
+                                    <td>{{ $order->phone }}</td>
                                     <td>{{ $order->address }}</td>
-                                    <td>{{ $order->phone }}</td> --}}
 
                                     {{-- Product column --}}
                                     <td>
