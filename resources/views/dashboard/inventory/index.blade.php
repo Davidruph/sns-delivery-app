@@ -20,6 +20,7 @@
                             <tr>
                                 <th style="width:80px;"><strong>#</strong></th>
                                 <th><strong>NAME</strong></th>
+                                <th><strong>CATEGORY</strong></th>
                                 <th><strong>IMAGE</strong></th>
                                 <th><strong>QUANTITY</strong></th>
                                 <th><strong>COST PRICE</strong></th>
@@ -34,6 +35,7 @@
                                 <tr>
                                     <td><strong>{{ $loop->iteration }}</strong></td>
                                     <td>{{ $item->name }}</td>
+                                    <td>{{ $item->category ? $item->category->name : 'No category' }}</td>
                                     <td>
                                         @if ($item->image && file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . 'storage/' . $item->image))
                                             <img src="{{ asset('storage/' . $item->image) }}" alt="Image"

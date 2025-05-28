@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\StoreSettingsController;
 
@@ -33,6 +34,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
         Route::post('/users/update/{user}', [UserController::class, 'update'])->name('users.update');
         Route::post('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+        Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+        Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+        Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+        Route::get('/category/{cat}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+        Route::post('/category/update/{cat}', [CategoryController::class, 'update'])->name('category.update');
+        Route::post('/category/{cat}', [CategoryController::class, 'destroy'])->name('category.destroy');
 
         Route::get('/store-settings', [StoreSettingsController::class, 'index'])->name('store.index');
         Route::post('/store-settings', [StoreSettingsController::class, 'update'])->name('store.update');

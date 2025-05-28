@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2025 at 06:45 PM
+-- Generation Time: May 28, 2025 at 05:22 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,6 +44,29 @@ CREATE TABLE `cache_locks` (
   `owner` varchar(255) NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `group_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `group_id`, `user_id`, `name`, `created_at`, `updated_at`) VALUES
+(2, 151175, 1, 'Wine collection', '2025-05-28 13:31:25', '2025-05-28 13:31:25'),
+(3, 151175, 1, 'Electromics', '2025-05-28 13:35:24', '2025-05-28 13:35:24');
 
 -- --------------------------------------------------------
 
@@ -117,7 +140,7 @@ CREATE TABLE `inventories` (
   `price` decimal(10,2) NOT NULL DEFAULT 0.00,
   `description` text DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `category` varchar(255) DEFAULT NULL,
+  `category_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -126,11 +149,13 @@ CREATE TABLE `inventories` (
 -- Dumping data for table `inventories`
 --
 
-INSERT INTO `inventories` (`id`, `user_id`, `name`, `quantity`, `cost_price`, `selling_price`, `price`, `description`, `image`, `category`, `created_at`, `updated_at`) VALUES
-(5, 5, 'Pepsi', 20, 1000.00, 2000.00, 0.00, 'this is pepsi inventory', 'inventory_images/68220f34ebc3c.jpeg', 'food_beverages', '2025-05-12 14:09:41', '2025-05-12 14:09:41'),
-(6, 5, 'Coke', 20, 3000.00, 5000.00, 0.00, 'This is a simple description of coke inventory', 'inventory_images/6825a4ace3662.jpg', 'food_beverages', '2025-05-15 07:24:13', '2025-05-15 07:24:13'),
-(7, 4, 'Flower vase', 2, 243.00, 466.00, 0.00, NULL, 'inventory_images/68273a822acf0.jpg', 'stationery', '2025-05-16 12:15:46', '2025-05-16 12:15:46'),
-(8, 4, 'fish container', 5, 234.00, 566.00, 0.00, NULL, NULL, 'cleaning_supplies', '2025-05-16 12:20:25', '2025-05-16 12:20:25');
+INSERT INTO `inventories` (`id`, `user_id`, `name`, `quantity`, `cost_price`, `selling_price`, `price`, `description`, `image`, `category_id`, `created_at`, `updated_at`) VALUES
+(5, 5, 'Pepsi', 20, 1000.00, 2000.00, 0.00, 'this is pepsi inventory', 'inventory_images/68220f34ebc3c.jpeg', NULL, '2025-05-12 14:09:41', '2025-05-12 14:09:41'),
+(6, 5, 'Coke', 20, 3000.00, 5000.00, 0.00, 'This is a simple description of coke inventory', 'inventory_images/6825a4ace3662.jpg', NULL, '2025-05-15 07:24:13', '2025-05-15 07:24:13'),
+(7, 4, 'Flower vase', 0, 243.00, 466.00, 0.00, NULL, 'inventory_images/68273a822acf0.jpg', NULL, '2025-05-16 12:15:46', '2025-05-16 12:15:46'),
+(8, 4, 'fish container', 5, 234.00, 566.00, 0.00, NULL, NULL, NULL, '2025-05-16 12:20:25', '2025-05-16 12:20:25'),
+(9, 4, 'Coke', 2, 244.00, 666.00, 0.00, 'coke', 'inventory_images/6837246df30ea.png', NULL, '2025-05-28 13:57:49', '2025-05-28 13:57:49'),
+(10, 4, 'wine bar', 64, 453.00, 897.00, 0.00, 'wine tray', 'inventory_images/683724b787d93.jpg', 2, '2025-05-28 13:59:03', '2025-05-28 14:08:45');
 
 -- --------------------------------------------------------
 
@@ -147,6 +172,16 @@ CREATE TABLE `jobs` (
   `available_at` int(10) UNSIGNED NOT NULL,
   `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `jobs`
+--
+
+INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `available_at`, `created_at`) VALUES
+(103, 'default', '{\"uuid\":\"ec8f08b9-2d5b-46c5-988b-23dc586504c2\",\"displayName\":\"Illuminate\\\\Notifications\\\\Events\\\\BroadcastNotificationCreated\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\",\"command\":\"O:38:\\\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\\\":14:{s:5:\\\"event\\\";O:60:\\\"Illuminate\\\\Notifications\\\\Events\\\\BroadcastNotificationCreated\\\":3:{s:10:\\\"notifiable\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";i:1;s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:38:\\\"App\\\\Notifications\\\\NewOrderNotification\\\":5:{s:8:\\\"\\u0000*\\u0000order\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:16:\\\"App\\\\Models\\\\Order\\\";s:2:\\\"id\\\";i:45;s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:8:\\\"\\u0000*\\u0000title\\\";s:18:\\\"New Order Received\\\";s:10:\\\"\\u0000*\\u0000message\\\";s:26:\\\"Order #45 has been placed.\\\";s:7:\\\"\\u0000*\\u0000link\\\";s:35:\\\"http:\\/\\/127.0.0.1:8000\\/order\\/45\\/view\\\";s:2:\\\"id\\\";s:36:\\\"963a5d4d-fa85-45c1-bef8-72a311601e12\\\";}s:4:\\\"data\\\";a:4:{s:5:\\\"title\\\";s:18:\\\"New Order Received\\\";s:7:\\\"message\\\";s:26:\\\"Order #45 has been placed.\\\";s:4:\\\"link\\\";s:35:\\\"http:\\/\\/127.0.0.1:8000\\/order\\/45\\/view\\\";s:4:\\\"time\\\";s:13:\\\"0 seconds ago\\\";}}s:5:\\\"tries\\\";N;s:7:\\\"timeout\\\";N;s:7:\\\"backoff\\\";N;s:13:\\\"maxExceptions\\\";N;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;}\"},\"createdAt\":1748195127,\"delay\":null}', 0, NULL, 1748195127, 1748195127),
+(104, 'default', '{\"uuid\":\"91593953-4803-449c-a4df-d666e6e3f22a\",\"displayName\":\"Illuminate\\\\Notifications\\\\Events\\\\BroadcastNotificationCreated\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\",\"command\":\"O:38:\\\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\\\":14:{s:5:\\\"event\\\";O:60:\\\"Illuminate\\\\Notifications\\\\Events\\\\BroadcastNotificationCreated\\\":3:{s:10:\\\"notifiable\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";i:2;s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:38:\\\"App\\\\Notifications\\\\NewOrderNotification\\\":5:{s:8:\\\"\\u0000*\\u0000order\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:16:\\\"App\\\\Models\\\\Order\\\";s:2:\\\"id\\\";i:45;s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:8:\\\"\\u0000*\\u0000title\\\";s:18:\\\"New Order Received\\\";s:10:\\\"\\u0000*\\u0000message\\\";s:26:\\\"Order #45 has been placed.\\\";s:7:\\\"\\u0000*\\u0000link\\\";s:35:\\\"http:\\/\\/127.0.0.1:8000\\/order\\/45\\/view\\\";s:2:\\\"id\\\";s:36:\\\"53977ab5-52bc-4382-8753-e210ca1eb30a\\\";}s:4:\\\"data\\\";a:4:{s:5:\\\"title\\\";s:18:\\\"New Order Received\\\";s:7:\\\"message\\\";s:26:\\\"Order #45 has been placed.\\\";s:4:\\\"link\\\";s:35:\\\"http:\\/\\/127.0.0.1:8000\\/order\\/45\\/view\\\";s:4:\\\"time\\\";s:13:\\\"0 seconds ago\\\";}}s:5:\\\"tries\\\";N;s:7:\\\"timeout\\\";N;s:7:\\\"backoff\\\";N;s:13:\\\"maxExceptions\\\";N;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;}\"},\"createdAt\":1748195127,\"delay\":null}', 0, NULL, 1748195127, 1748195127),
+(105, 'default', '{\"uuid\":\"1ad36004-9ea1-4664-8d8f-b83147dfe87a\",\"displayName\":\"Illuminate\\\\Notifications\\\\Events\\\\BroadcastNotificationCreated\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\",\"command\":\"O:38:\\\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\\\":14:{s:5:\\\"event\\\";O:60:\\\"Illuminate\\\\Notifications\\\\Events\\\\BroadcastNotificationCreated\\\":3:{s:10:\\\"notifiable\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";i:3;s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:38:\\\"App\\\\Notifications\\\\NewOrderNotification\\\":5:{s:8:\\\"\\u0000*\\u0000order\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:16:\\\"App\\\\Models\\\\Order\\\";s:2:\\\"id\\\";i:45;s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:8:\\\"\\u0000*\\u0000title\\\";s:18:\\\"New Order Received\\\";s:10:\\\"\\u0000*\\u0000message\\\";s:26:\\\"Order #45 has been placed.\\\";s:7:\\\"\\u0000*\\u0000link\\\";s:35:\\\"http:\\/\\/127.0.0.1:8000\\/order\\/45\\/view\\\";s:2:\\\"id\\\";s:36:\\\"c8497c2e-7e34-46b6-9edf-ab19666ac9ba\\\";}s:4:\\\"data\\\";a:4:{s:5:\\\"title\\\";s:18:\\\"New Order Received\\\";s:7:\\\"message\\\";s:26:\\\"Order #45 has been placed.\\\";s:4:\\\"link\\\";s:35:\\\"http:\\/\\/127.0.0.1:8000\\/order\\/45\\/view\\\";s:4:\\\"time\\\";s:13:\\\"0 seconds ago\\\";}}s:5:\\\"tries\\\";N;s:7:\\\"timeout\\\";N;s:7:\\\"backoff\\\";N;s:13:\\\"maxExceptions\\\";N;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;}\"},\"createdAt\":1748195127,\"delay\":null}', 0, NULL, 1748195127, 1748195127),
+(106, 'default', '{\"uuid\":\"7ce3a0f6-1278-4525-90bd-50bdc1360043\",\"displayName\":\"Illuminate\\\\Notifications\\\\Events\\\\BroadcastNotificationCreated\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\",\"command\":\"O:38:\\\"Illuminate\\\\Broadcasting\\\\BroadcastEvent\\\":14:{s:5:\\\"event\\\";O:60:\\\"Illuminate\\\\Notifications\\\\Events\\\\BroadcastNotificationCreated\\\":3:{s:10:\\\"notifiable\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:15:\\\"App\\\\Models\\\\User\\\";s:2:\\\"id\\\";i:4;s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:12:\\\"notification\\\";O:38:\\\"App\\\\Notifications\\\\NewOrderNotification\\\":5:{s:8:\\\"\\u0000*\\u0000order\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:16:\\\"App\\\\Models\\\\Order\\\";s:2:\\\"id\\\";i:42;s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:8:\\\"\\u0000*\\u0000title\\\";s:20:\\\"Order Status Updated\\\";s:10:\\\"\\u0000*\\u0000message\\\";s:47:\\\"Your order #42 status has been updated to: Paid\\\";s:7:\\\"\\u0000*\\u0000link\\\";s:35:\\\"http:\\/\\/127.0.0.1:8000\\/order\\/42\\/view\\\";s:2:\\\"id\\\";s:36:\\\"24419c4d-705e-41bc-84bd-9ba19923c60f\\\";}s:4:\\\"data\\\";a:4:{s:5:\\\"title\\\";s:20:\\\"Order Status Updated\\\";s:7:\\\"message\\\";s:47:\\\"Your order #42 status has been updated to: Paid\\\";s:4:\\\"link\\\";s:35:\\\"http:\\/\\/127.0.0.1:8000\\/order\\/42\\/view\\\";s:4:\\\"time\\\";s:13:\\\"0 seconds ago\\\";}}s:5:\\\"tries\\\";N;s:7:\\\"timeout\\\";N;s:7:\\\"backoff\\\";N;s:13:\\\"maxExceptions\\\";N;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;}\"},\"createdAt\":1748437091,\"delay\":null}', 0, NULL, 1748437091, 1748437091);
 
 -- --------------------------------------------------------
 
@@ -194,7 +229,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2025_05_12_154240_create_order_items_table', 4),
 (9, '2025_05_15_130526_create_notifications_table', 5),
 (10, '2025_05_17_135728_create_store_settings_table', 6),
-(11, '2025_05_18_125635_add_avatar_to_users_table', 7);
+(11, '2025_05_18_125635_add_avatar_to_users_table', 7),
+(12, '2025_05_28_144446_update_inventory_category_to_category_id', 8);
 
 -- --------------------------------------------------------
 
@@ -263,6 +299,7 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('1ca03c76-d5e4-400e-9462-5be34126f563', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #37 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/37\\/view\",\"order_id\":37}', NULL, '2025-05-17 11:52:16', '2025-05-17 11:52:16'),
 ('1f4c32a6-a35d-43ae-b26d-f505d62a21ed', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #43 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/43\\/view\",\"order_id\":43}', NULL, '2025-05-17 12:46:58', '2025-05-17 12:46:58'),
 ('216835ff-d539-4663-b2d4-c1b3d2b22313', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #38 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/38\\/view\",\"order_id\":38}', NULL, '2025-05-17 11:53:15', '2025-05-17 11:53:15'),
+('24419c4d-705e-41bc-84bd-9ba19923c60f', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 4, '{\"title\":\"Order Status Updated\",\"message\":\"Your order #42 status has been updated to: Paid\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/42\\/view\",\"order_id\":42}', NULL, '2025-05-28 11:58:11', '2025-05-28 11:58:11'),
 ('26198e87-510f-42f3-9f06-461c094d1304', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #36 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/36\\/view\",\"order_id\":36}', NULL, '2025-05-17 11:48:54', '2025-05-17 11:48:54'),
 ('2979eae6-9dd8-47a9-b18f-32159ee768ee', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 1, '{\"title\":\"New Order Received\",\"message\":\"Order #35 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/35\\/view\",\"order_id\":35}', NULL, '2025-05-17 11:46:27', '2025-05-17 11:46:27'),
 ('2f5ee442-f551-410d-9900-022eb221d1d3', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 1, '{\"title\":\"New Order Received\",\"message\":\"Order #42 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/42\\/view\",\"order_id\":42}', NULL, '2025-05-17 12:07:31', '2025-05-17 12:07:31'),
@@ -270,6 +307,7 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('4a9ea229-7f5f-4b4a-822d-c45c710f548a', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #41 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/41\\/view\",\"order_id\":41}', NULL, '2025-05-17 12:00:47', '2025-05-17 12:00:47'),
 ('4e946184-998b-4126-a84b-5c7327f4f4f4', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 1, '{\"title\":\"New Order Received\",\"message\":\"Order #39 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/39\\/view\",\"order_id\":39}', NULL, '2025-05-17 11:56:01', '2025-05-17 11:56:01'),
 ('500c0c33-9b3d-4c3e-b3fa-541186e13000', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #34 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/34\\/view\",\"order_id\":34}', NULL, '2025-05-17 11:38:41', '2025-05-17 11:38:41'),
+('53977ab5-52bc-4382-8753-e210ca1eb30a', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #45 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/45\\/view\",\"order_id\":45}', NULL, '2025-05-25 16:45:27', '2025-05-25 16:45:27'),
 ('5f39f706-fb02-470e-84bd-cccdda8180ac', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #39 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/39\\/view\",\"order_id\":39}', NULL, '2025-05-17 11:56:01', '2025-05-17 11:56:01'),
 ('5fca5ca3-d352-4ddd-b0cd-f3082b5d76f4', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #42 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/42\\/view\",\"order_id\":42}', NULL, '2025-05-17 12:07:31', '2025-05-17 12:07:31'),
 ('6efd4cb6-581d-4768-95e7-8e7e3d32b171', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #44 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/44\\/view\",\"order_id\":44}', NULL, '2025-05-17 13:18:36', '2025-05-17 13:18:36'),
@@ -277,6 +315,7 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('9048fd5d-6dce-4f7b-9ec6-a70f4eea8247', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #40 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/40\\/view\",\"order_id\":40}', NULL, '2025-05-17 11:59:16', '2025-05-17 11:59:16'),
 ('9310e5d0-483e-4a6a-afd0-d5783ecf42c9', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 1, '{\"title\":\"New Order Received\",\"message\":\"Order #40 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/40\\/view\",\"order_id\":40}', NULL, '2025-05-17 11:59:16', '2025-05-17 11:59:16'),
 ('93c8204f-ffd6-413b-8077-769a79bdd48c', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #32 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/32\\/view\",\"order_id\":32}', NULL, '2025-05-17 10:58:33', '2025-05-17 10:58:33'),
+('963a5d4d-fa85-45c1-bef8-72a311601e12', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 1, '{\"title\":\"New Order Received\",\"message\":\"Order #45 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/45\\/view\",\"order_id\":45}', NULL, '2025-05-25 16:45:26', '2025-05-25 16:45:26'),
 ('9959c7b8-8a65-42a9-99d4-09ca929b489e', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #44 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/44\\/view\",\"order_id\":44}', NULL, '2025-05-17 13:18:36', '2025-05-17 13:18:36'),
 ('9e66048b-922d-47e2-81a8-c808d1d54498', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #41 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/41\\/view\",\"order_id\":41}', NULL, '2025-05-17 12:00:47', '2025-05-17 12:00:47'),
 ('9fcad2ea-7abe-4731-86af-ece2a71005c2', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 1, '{\"title\":\"New Order Received\",\"message\":\"Order #37 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/37\\/view\",\"order_id\":37}', NULL, '2025-05-17 11:52:16', '2025-05-17 11:52:16'),
@@ -284,6 +323,7 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('a30a3915-f2ad-423d-9964-c307aacabc24', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #36 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/36\\/view\",\"order_id\":36}', NULL, '2025-05-17 11:48:54', '2025-05-17 11:48:54'),
 ('b5a26c84-bc45-4d61-8b85-b3a5a6c8e348', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #40 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/40\\/view\",\"order_id\":40}', NULL, '2025-05-17 11:59:16', '2025-05-17 11:59:16'),
 ('be4f26ae-c7fd-4697-84f7-7f186e3c11ea', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 4, '{\"title\":\"Order Status Updated\",\"message\":\"Your order #40 status has been updated to: Not available\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/40\\/view\",\"order_id\":40}', NULL, '2025-05-17 12:45:57', '2025-05-17 12:45:57'),
+('c8497c2e-7e34-46b6-9edf-ab19666ac9ba', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #45 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/45\\/view\",\"order_id\":45}', NULL, '2025-05-25 16:45:27', '2025-05-25 16:45:27'),
 ('cc6b9ea0-6806-423b-84f2-eb94a1ceb63c', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #35 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/35\\/view\",\"order_id\":35}', NULL, '2025-05-17 11:46:27', '2025-05-17 11:46:27'),
 ('cde42acd-51d4-4df2-8463-80f9b77b766d', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 2, '{\"title\":\"New Order Received\",\"message\":\"Order #33 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/33\\/view\",\"order_id\":33}', NULL, '2025-05-17 11:17:18', '2025-05-17 11:17:18'),
 ('cf02cff6-add6-4c1a-a440-78f7d922a18e', 'App\\Notifications\\NewOrderNotification', 'App\\Models\\User', 3, '{\"title\":\"New Order Received\",\"message\":\"Order #38 has been placed.\",\"link\":\"http:\\/\\/127.0.0.1:8000\\/order\\/38\\/view\",\"order_id\":38}', NULL, '2025-05-17 11:53:15', '2025-05-17 11:53:15'),
@@ -355,9 +395,10 @@ INSERT INTO `orders` (`id`, `user_id`, `name`, `address`, `email`, `phone`, `sta
 (39, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Pending', NULL, '2025-05-17 11:56:01', '2025-05-17 11:56:01'),
 (40, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Not available', 'we don\'t fish container', '2025-05-17 11:59:16', '2025-05-17 12:45:57'),
 (41, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Pending', NULL, '2025-05-17 12:00:47', '2025-05-17 12:00:47'),
-(42, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Delivery Arranged', 'we are currently arranging the delivery', '2025-05-17 12:07:31', '2025-05-17 12:20:58'),
+(42, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Paid', 'we are currently arranging the delivery', '2025-05-17 12:07:31', '2025-05-28 11:58:11'),
 (43, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Delivered', 'delivered', '2025-05-17 12:46:58', '2025-05-17 12:47:29'),
-(44, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Pending', NULL, '2025-05-17 13:18:35', '2025-05-17 13:18:35');
+(44, 4, 'Romania Ruth', 'Abuja', 'juniord.dj88+3@gmail.com', '0938378443', 'Pending', NULL, '2025-05-17 13:18:35', '2025-05-17 13:18:35'),
+(45, 5, 'Rose Sampe', 'plot 76 pasali extensions', 'juniord.dj88+4@gmail.com', '0003837833', 'Pending', NULL, '2025-05-25 16:45:26', '2025-05-25 16:45:26');
 
 -- --------------------------------------------------------
 
@@ -424,7 +465,9 @@ INSERT INTO `order_items` (`id`, `order_id`, `inventory_id`, `quantity`, `amount
 (50, 41, 7, 5, 6.00, '2025-05-17 12:00:47', '2025-05-17 12:00:47'),
 (51, 42, 8, 3, 45.00, '2025-05-17 12:07:31', '2025-05-17 12:07:31'),
 (52, 43, 7, 1, 20.00, '2025-05-17 12:46:58', '2025-05-17 12:46:58'),
-(53, 44, 7, 4, 5.00, '2025-05-17 13:18:36', '2025-05-17 13:18:36');
+(53, 44, 7, 4, 5.00, '2025-05-17 13:18:36', '2025-05-17 13:18:36'),
+(54, 45, 5, 1, 2.00, '2025-05-25 16:45:26', '2025-05-25 16:45:26'),
+(55, 45, 6, 3, 4.00, '2025-05-25 16:45:26', '2025-05-25 16:45:26');
 
 -- --------------------------------------------------------
 
@@ -507,7 +550,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('5da8jeBLPidfyGdqIandQuUtVZRCH15iqxarGGwg', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiT0FWeURLcHhYRTFoMlN1TDNTVGpDRFJ1OFZhWE5GZjlqaWZabWFyWiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1747582818);
+('qFcix16WDy57fIWXBzvSmGwLmXJzXLeefWYbrFYi', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidzhlOFd4bGpSSjlHaWUzR3N0OHVqeWF0M1QyWDRHcFY2U3V0NnZ1WiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1748445296);
 
 -- --------------------------------------------------------
 
@@ -602,6 +645,12 @@ ALTER TABLE `cache`
 --
 ALTER TABLE `cache_locks`
   ADD PRIMARY KEY (`key`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -734,6 +783,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -743,31 +798,31 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `inventories`
 --
 ALTER TABLE `inventories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `permissions`

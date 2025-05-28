@@ -22,6 +22,28 @@
                  </a>
              </li>
 
+             @if (auth()->user()->getRoleNames()->first() === 'Super Admin')
+                 <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+                         <div class="menu-icon">
+                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                 <path
+                                     d="M3 6C3 4.89543 3.89543 4 5 4H9.5C9.89782 4 10.2794 4.15804 10.5607 4.43934L12.1213 6H19C20.1046 6 21 6.89543 21 8V18C21 19.1046 20.1046 20 19 20H5C3.89543 20 3 19.1046 3 18V6Z"
+                                     fill="#763ed0" />
+                                 <path d="M3 8H21V18C21 19.1046 20.1046 20 19 20H5C3.89543 20 3 19.1046 3 18V8Z"
+                                     fill="#B9A8FF" opacity="0.4" />
+                             </svg>
+
+                         </div>
+
+                         <span class="nav-text">Category</span>
+                     </a>
+                     <ul aria-expanded="false">
+                         <li><a href="{{ route('category.index') }}">All Category</a></li>
+                         <li><a href="{{ route('category.create') }}">Create Category</a></li>
+                     </ul>
+                 </li>
+             @endif
 
              <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
                      <div class="menu-icon">

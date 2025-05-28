@@ -768,7 +768,7 @@
                                             class="ti-arrow-end"></i></a> --}}
                                 </div>
                             </li>
-                            <li class="nav-item dropdown notification_dropdown">
+                            {{-- <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link bell-link " href="javascript:void(0);">
                                     <svg width="28" height="28" viewBox="0 0 28 28" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -780,8 +780,8 @@
                                             fill="#B9A8FF" />
                                     </svg>
                                 </a>
-                            </li>
-                            <li class="nav-item dropdown notification_dropdown">
+                            </li> --}}
+                            {{-- <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link " href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <svg width="28" height="29" viewBox="0 0 28 29" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -861,7 +861,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </li>
+                            </li> --}}
                         </ul>
                         <a class="nav-link user-profile" href="javascript:void(0);" role="button"
                             data-bs-toggle="dropdown">
