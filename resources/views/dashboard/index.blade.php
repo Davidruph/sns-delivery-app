@@ -33,7 +33,7 @@
                                     <div class="students1 one d-flex align-items-center justify-content-between ">
                                         <div class="content">
                                             <h2 class="mb-0">
-                                                {{ $isVendor ? optional(Auth::user()->store)->store_currency_symbol . number_format($totalRevenue, 2) : optional(Auth::user()->store)->store_currency_symbol . $totalOrders }}
+                                                {{ $isVendor ? optional(Auth::user()->store)->store_currency_symbol . number_format($totalRevenue, 2) : $totalOrders }}
                                             </h2>
                                             <span class="mb-2 fs-14">
                                                 @if ($isVendor)
