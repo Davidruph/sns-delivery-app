@@ -101,4 +101,38 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('vendors.index')->with('success', 'User deleted successfully.');
     }
+
+    public function signup_request()
+    {
+        $users = User::where('group_id', '!=', Auth::user()->group_id)
+            ->where('status', 'pending')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('dashboard.users.signup_request', compact('users'));
+    }
+
+    public function signup_request_status(Request $request, User $user)
+    {
+        $request->validate([
+            'user_status' => 'required|in:active,pending,disabled'
+        ]);
+
+        // Make sure group_id is present to avoid MySQL error
+        if (is_null($user->group_id)) {
+            return redirect()->route('users.signup_request')
+                ->withErrors(['group_id' => 'User must be assigned to a group before approval.']);
+        }
+
+        $user->status = $request->user_status;
+        $user->save();
+
+        $messages = [
+            'active' => 'User approved and activated successfully.',
+            'pending' => 'User status reverted to pending.',
+            'disabled' => 'User rejected and disabled successfully.'
+        ];
+
+        return redirect()->route('users.signup_request')->with('success', $messages[$request->user_status]);
+    }
 }

@@ -38,13 +38,15 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'group_id' => random_int(100000, 999999),
             'plan' => 'free',
+            'status' => 'pending',
         ]);
 
         $user->assignRole('Super Admin');
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // return redirect(route('dashboard', absolute: false));
+        return redirect()->route('login')->with('success', 'Account created successfully. Please log in.');
     }
 
     /**
@@ -67,9 +69,28 @@ class AuthController extends Controller
 
         $loginType = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        if (!Auth::attempt([$loginType => $request->input('login'), 'password' => $request->input('password')], $request->boolean('remember'))) {
+        $credentials = [$loginType => $request->input('login'), 'password' => $request->input('password')];
+
+        if (!Auth::attempt($credentials, $request->boolean('remember'))) {
             return back()->withErrors([
                 'login' => __('auth.failed'),
+            ])->withInput($request->only('login'));
+        }
+
+        // Check user status
+        $user = Auth::user();
+
+        if ($user->status === 'pending') {
+            Auth::logout();
+            return back()->withErrors([
+                'login' => 'Your account is pending approval. Please contact support.',
+            ])->withInput($request->only('login'));
+        }
+
+        if ($user->status === 'disabled') {
+            Auth::logout();
+            return back()->withErrors([
+                'login' => 'Your account has been disabled. Please contact support.',
             ])->withInput($request->only('login'));
         }
 

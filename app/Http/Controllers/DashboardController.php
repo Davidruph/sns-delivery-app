@@ -27,7 +27,7 @@ class DashboardController extends Controller
 
             $orderStatusCounts = $orders->groupBy('status')->map->count();
 
-            // Calculate vendor's revenue (sum of selling_price * quantity for all items)
+            // Calculate vendor's revenue
             $totalRevenue = 0;
             foreach ($orders as $order) {
                 foreach ($order->items as $item) {
@@ -43,10 +43,26 @@ class DashboardController extends Controller
                 'isVendor' => true
             ]);
         } else {
-            // Admin/Manager/CS data
-            $orderStatusCounts = Order::groupBy('status')->selectRaw('status, count(*) as count')->pluck('count', 'status');
-            $totalOrders = Order::count();
-            $totalRevenue = OrderItem::sum('amount');
+            // Admin/Manager/CS data filtered by user's group_id
+            $groupId = $user->group_id;
+
+            // Get orders related to inventories owned by users in the same group
+            $orderStatusCounts = Order::whereHas('items.inventory.user', function ($query) use ($groupId) {
+                $query->where('group_id', $groupId);
+            })
+                ->groupBy('status')
+                ->selectRaw('status, count(*) as count')
+                ->pluck('count', 'status');
+
+            // Count orders belonging to the group
+            $totalOrders = Order::whereHas('items.inventory.user', function ($query) use ($groupId) {
+                $query->where('group_id', $groupId);
+            })->count();
+
+            // Sum revenue from order items tied to inventories of the group
+            $totalRevenue = OrderItem::whereHas('inventory.user', function ($query) use ($groupId) {
+                $query->where('group_id', $groupId);
+            })->sum('amount');
 
             return view('dashboard.index', [
                 'orderStatusCounts' => $orderStatusCounts,

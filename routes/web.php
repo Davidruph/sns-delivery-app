@@ -49,6 +49,9 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/store-settings', [StoreSettingsController::class, 'index'])->name('store.index');
         Route::post('/store-settings', [StoreSettingsController::class, 'update'])->name('store.update');
+
+        Route::get('/new-signup-request', [UserController::class, 'signup_request'])->name('users.signup_request');
+        Route::post('/signup-request-status/{user}', [UserController::class, 'signup_request_status'])->name('users.signup_request_status');
     });
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
