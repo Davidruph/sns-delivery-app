@@ -15,6 +15,29 @@
                     @endif
                 </div>
                 <div class="card-body">
+                    <form method="GET" action="{{ route('order.index') }}" class="mb-3 row g-3 align-items-end">
+                        <div class="col-auto">
+                            <select name="filter" class="default-select form-control wide">
+                                <option value="">-- Filter By --</option>
+                                <option value="week" {{ request('filter') === 'week' ? 'selected' : '' }}>This Week
+                                </option>
+                                <option value="month" {{ request('filter') === 'month' ? 'selected' : '' }}>This Month
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <input type="date" name="from" class="form-control" value="{{ request('from') }}"
+                                placeholder="From date">
+                        </div>
+                        <div class="col-auto">
+                            <input type="date" name="to" class="form-control" value="{{ request('to') }}"
+                                placeholder="To date">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Apply Filter</button>
+                            <a href="{{ route('order.index') }}" class="btn btn-secondary">Reset</a>
+                        </div>
+                    </form>
                     <table class="table table-hover table-responsive-sm">
                         <thead>
                             <tr>

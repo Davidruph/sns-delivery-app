@@ -50,6 +50,11 @@
                                 <input type="number" name="phone" id="phone" class="form-control"
                                     value="{{ old('phone') }}" required>
                             </div>
+                            <div class="col">
+                                <label for="staff_position"><strong>Staff Position</strong></label>
+                                <input type="text" name="staff_position" id="staff_position" class="form-control"
+                                    value="{{ old('staff_position') }}" required>
+                            </div>
                         </div>
 
                         <div class="mb-3">

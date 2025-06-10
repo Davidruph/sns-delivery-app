@@ -52,6 +52,11 @@
                             <input type="text" name="phone" id="phone" class="form-control"
                                 value="{{ old('phone', $user->phone) }}" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="staff_position"><strong>Staff Position</strong></label>
+                            <input type="text" name="staff_position" id="staff_position" class="form-control"
+                                value="{{ old('staff_position', $user->staff_position) }}" required>
+                        </div>
 
                         <div class="mb-3">
                             <label for="address"><strong>Address</strong></label>

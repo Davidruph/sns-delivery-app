@@ -38,7 +38,8 @@ class UserController extends Controller
             'role' => 'required|exists:roles,name',
             'username' => 'required|string|max:255|unique:users,username,',
             'phone' => 'required|string|max:255|unique:users,phone',
-            'address' => 'required|string|max:255'
+            'address' => 'required|string|max:255',
+            'staff_position' => 'required|string|max:255'
         ]);
 
         $user = User::create([
@@ -50,6 +51,7 @@ class UserController extends Controller
             'phone' => $request->phone,
             'address' => $request->address,
             'plan' => 'free',
+            'staff_position' => $request->staff_position,
         ]);
 
         $user->assignRole($request->role);
@@ -76,7 +78,8 @@ class UserController extends Controller
             'role' => 'required|exists:roles,name',
             'username' => 'required|string|max:255|unique:users,username,' . $user->id,
             'phone' => 'required|string|max:255',
-            'address' => 'required|string|max:255'
+            'address' => 'required|string|max:255',
+            'staff_position' => 'required|string|max:255'
         ]);
 
         $user->update([
@@ -85,6 +88,7 @@ class UserController extends Controller
             'username' => $request->username,
             'phone' => $request->phone,
             'address' => $request->address,
+            'staff_position' => $request->staff_position,
         ]);
 
         $user->syncRoles($request->role);

@@ -28,7 +28,8 @@ class User extends Authenticatable
         'address',
         'group_id',
         'plan',
-        'status'
+        'status',
+        'staff_position',
     ];
 
     /**

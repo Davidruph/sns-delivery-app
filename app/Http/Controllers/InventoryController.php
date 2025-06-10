@@ -97,7 +97,7 @@ class InventoryController extends Controller
     public function edit(Inventory $inventory)
     {
         // Authorization check: only allow the owner to edit
-        if (Auth::id() !== $inventory->user_id) {
+        if (Auth::id() != $inventory->user_id) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -110,7 +110,7 @@ class InventoryController extends Controller
     public function update(Request $request, Inventory $inventory)
     {
         // Authorization check
-        if (Auth::id() !== $inventory->user_id) {
+        if (Auth::id() != $inventory->user_id) {
             abort(403, 'Unauthorized action.');
         }
 

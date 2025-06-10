@@ -22,6 +22,7 @@
                                 <th><strong>NAME</strong></th>
                                 <th><strong>EMAIL</strong></th>
                                 <th><strong>PHONE</strong></th>
+                                <th><strong>STAFF POSITION</strong></th>
                                 <th><strong>ADDRESS</strong></th>
                                 <th><strong>ROLE</strong></th>
                                 <th><strong>DATE CREATED</strong></th>
@@ -54,6 +55,7 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone }}</td>
+                                    <td>{{ $user->staff_position }}</td>
                                     <td>{{ $user->address }}</td>
                                     <td>{{ $user->roles->first()->name ?? 'No role assigned' }}</td>
                                     <td>{{ $user->created_at->format('d-m-Y') }}</td>

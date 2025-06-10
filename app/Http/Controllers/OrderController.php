@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Inventory;
@@ -10,30 +10,89 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\NewOrderNotification;
 use Illuminate\Support\Facades\Notification;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with('items.inventory')
-            ->where('user_id', Auth::id())
-            ->latest()
-            ->paginate(10);
+        $ordersQuery = Order::with('items.inventory')
+            ->where('user_id', Auth::id());
+
+        // Filter: this week
+        if ($request->filter === 'week') {
+            $ordersQuery->whereBetween('created_at', [
+                Carbon::now()->startOfWeek(),
+                Carbon::now()->endOfWeek(),
+            ]);
+        }
+
+        // Filter: this month
+        if ($request->filter === 'month') {
+            $ordersQuery->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year);
+        }
+
+        // Filter: custom date range
+        if ($request->filled('from') && $request->filled('to')) {
+            $ordersQuery->whereBetween('created_at', [
+                Carbon::parse($request->from)->startOfDay(),
+                Carbon::parse($request->to)->endOfDay(),
+            ]);
+        }
+
+        $orders = $ordersQuery->latest()->paginate(10);
+
         return view('dashboard.order.index', compact('orders'));
     }
 
-    public function view_all_orders()
+    // public function view_all_orders()
+    // {
+    //     $userIds = Auth::user()->groupUsers->pluck('id');
+    //     $statuses = $this->getAvailableStatusesForRole();
+
+    //     $orders = Order::with(['items.inventory', 'user'])
+    //         ->whereIn('user_id', $userIds)
+    //         ->latest()
+    //         ->paginate(10);
+
+    //     return view('dashboard.order.view_all_orders', compact('orders', 'statuses'));
+    // }
+
+    public function view_all_orders(Request $request)
     {
         $userIds = Auth::user()->groupUsers->pluck('id');
         $statuses = $this->getAvailableStatusesForRole();
 
-        $orders = Order::with(['items.inventory', 'user'])
-            ->whereIn('user_id', $userIds)
-            ->latest()
-            ->paginate(10);
+        $ordersQuery = Order::with(['items.inventory', 'user'])
+            ->whereIn('user_id', $userIds);
+
+        // Filter: this week
+        if ($request->filter === 'week') {
+            $ordersQuery->whereBetween('created_at', [
+                Carbon::now()->startOfWeek(),
+                Carbon::now()->endOfWeek(),
+            ]);
+        }
+
+        // Filter: this month
+        if ($request->filter === 'month') {
+            $ordersQuery->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year);
+        }
+
+        // Filter: custom date range
+        if ($request->filled('from') && $request->filled('to')) {
+            $ordersQuery->whereBetween('created_at', [
+                Carbon::parse($request->from)->startOfDay(),
+                Carbon::parse($request->to)->endOfDay(),
+            ]);
+        }
+
+        $orders = $ordersQuery->latest()->paginate(10);
 
         return view('dashboard.order.view_all_orders', compact('orders', 'statuses'));
     }
@@ -127,7 +186,9 @@ class OrderController extends Controller
 
     public function edit(Order $order)
     {
-        if (Auth::user()->id !== $order->user_id) {
+        // dd(Auth::id(), Auth::user()->id, $order->user_id);
+
+        if (Auth::user()->id != $order->user_id) {
             abort(403, 'You are not authorized to edit this order.');
         }
 
@@ -147,7 +208,7 @@ class OrderController extends Controller
             'address' => 'required|string|max:255'
         ]);
 
-        if (Auth::user()->id !== $order->user_id) {
+        if (Auth::user()->id != $order->user_id) {
             abort(403, 'You are not authorized to update this order.');
         }
 
@@ -249,7 +310,7 @@ class OrderController extends Controller
 
     public function destroy(Order $order)
     {
-        if (Auth::user()->id !== $order->user_id) {
+        if (Auth::user()->id != $order->user_id) {
             abort(403, 'You are not authorized to delete this order.');
         }
 
