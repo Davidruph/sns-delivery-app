@@ -177,9 +177,7 @@
                  </ul>
              </li>
 
-             @if (
-                 (auth()->user()->getRoleNames()->first() === 'Super Admin' && auth()->user()->group_id == '151175') ||
-                     auth()->user()->group_id == '943460')
+             @if (auth()->user()->getRoleNames()->first() === 'Super Admin')
                  <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
                          <div class="menu-icon">
                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
